@@ -37,7 +37,7 @@ class admin(webapp.RequestHandler):
 		path = os.path.join(os.path.dirname(__file__), 'templates/question.html')
 		self.response.out.write(template.render(path,""))
 
-class adminSubmitQuestions(webapp.RequestHandler):
+class adminQuestionsSubmit(webapp.RequestHandler):
 	def post(self):
 		q = questiondb.question(questionNumber=string.atoi(self.request.get('qno')),
 								question=self.request.get('ques'),
@@ -49,7 +49,7 @@ class adminSubmitQuestions(webapp.RequestHandler):
 								ans=self.request.get('ans'))
 		q.put()
 
-class adminListQuestions(webapp.RequestHandler):
+class adminQuestionsList(webapp.RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html'
 		query = questiondb.question.all()
@@ -63,8 +63,8 @@ application = webapp.WSGIApplication(
 									('/contest/start(|/)',contestStart),
 									('/contest/question/(\d)/', contestQuestion),
 									('/admin/', admin),
-									('/admin/submit/questions/', adminSubmitQuestions),
-									('/admin/list/questions/',adminListQuestions)],
+									('/admin/questions/submit/', adminQuestionsSubmit),
+									('/admin/questions/list/',adminQuestionsList)],
 									debug=True)
 
 def main():
