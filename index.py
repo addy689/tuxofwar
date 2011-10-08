@@ -1,16 +1,10 @@
 import os
+import time
 import simplejson as json
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
-
-class model:
-	def __init__(self,a,b):
-		self.a=a
-		self.b=b
-
-m = model(1,2)
 
 class index(webapp.RequestHandler):
 	def get(self):
@@ -18,6 +12,12 @@ class index(webapp.RequestHandler):
 		path = os.path.join(os.path.dirname(__file__), 'templates/index.html')
 		self.response.out.write(template.render(path,""))
 
+class contestStart(webapp.RequestHandler):
+	def get(self):
+		self.response.out.write(time.time())
+		self.response.out.write("<br />")
+		self.response.out.write(time.time()-1317815757.3)
+	
 class contestQuestion(webapp.RequestHandler):
 	def get(self,var):
 		user = users.get_current_user()
@@ -29,9 +29,22 @@ class contestQuestion(webapp.RequestHandler):
 		else:
 			self.redirect(users.create_login_url(self.request.uri))
 
+class admin(webapp.RequestHandler):
+	def get(self):
+		self.response.headers['Content-Type'] = 'text/html'
+		path = os.path.join(os.path.dirname(__file__), 'templates/question.html')
+		self.response.out.write(template.render(path,""))
+
+class adminSubmitQuestions(webapp.RequestHandler):
+	def post(self):
+		self.response.out.write(self.request.get('ques'))
+
 application = webapp.WSGIApplication(
 									[('/', index),
-									('/contest/question/(\d)|/', contestQuestion)],
+									('/contest/start(|/)',contestStart),
+									('/contest/question/(\d)/', contestQuestion),
+									('/admin/', admin),
+									('/admin/submit/questions/', adminSubmitQuestions)],
 									debug=True)
 
 def main():
