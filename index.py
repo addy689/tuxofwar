@@ -54,15 +54,9 @@ class adminListQuestions(webapp.RequestHandler):
 		self.response.headers['Content-Type'] = 'text/html'
 		query = questiondb.question.all()
 		result = query.fetch(5)
-		for q in result:
-			self.response.out.write(q.questionNumber)
-			self.response.out.write(q.question+"<br />")
-			self.response.out.write(q.qimage+"<br />")
-			self.response.out.write(q.opt1+"<br />")
-			self.response.out.write(q.opt2+"<br />")
-			self.response.out.write(q.opt3+"<br />")
-			self.response.out.write(q.opt4+"<br />")
-			self.response.out.write(q.ans+"<br />")
+		template_values = { 'questions' : result }
+		path = os.path.join(os.path.dirname(__file__), 'templates/questionlist.html')
+		self.response.out.write(template.render(path, template_values))
 
 application = webapp.WSGIApplication(
 									[('/', index),
