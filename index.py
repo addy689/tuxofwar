@@ -31,7 +31,7 @@ class contestQuestion(webapp.RequestHandler):
 		else:
 			self.redirect(users.create_login_url(self.request.uri))
 
-class admin(webapp.RequestHandler):
+class adminQuestionsAdd(webapp.RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html'
 		path = os.path.join(os.path.dirname(__file__), 'templates/question.html')
@@ -62,7 +62,7 @@ application = webapp.WSGIApplication(
 									[('/', index),
 									('/contest/start(|/)',contestStart),
 									('/contest/question/(\d)/', contestQuestion),
-									('/admin/', admin),
+									('/admin/questions/add/', adminQuestionsAdd),
 									('/admin/questions/submit/', adminQuestionsSubmit),
 									('/admin/questions/list/',adminQuestionsList)],
 									debug=True)
