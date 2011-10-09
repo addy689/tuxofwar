@@ -603,10 +603,6 @@ TerminalShell.fallback = function(terminal, cmd) {
  				'Use the source, Luke!',
  				'There are cheat codes.'
  			]));
-		} else if (cmd == 'find kitten') {
-			terminal.print($('<iframe width="800" height="600" src="http://www.robotfindskitten.net/rfk.swf"></iframe>'));
-		} else if (cmd == 'buy stuff') {
-			Filesystem['store'].enter();
 		} else if (cmd == 'time travel') {
 			xkcdDisplay(terminal, 630);
 		} else if (/:\(\)\s*{\s*:\s*\|\s*:\s*&\s*}\s*;\s*:/.test(cmd)) {
