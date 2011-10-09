@@ -17,10 +17,11 @@ def getQuestion(num):
 	for q in result:
 		if q.questionNumber == string.atoi(num):
 			return ("{"+
-					"\"question\" : " + "\""+q.question+"\""+","+
-					"\"opt1\" : " + "\""+q.opt1+"\""+","+
-					"\"opt2\" : " + "\""+q.opt2+"\""+","+
-					"\"opt3\" : " + "\""+q.opt3+"\""+","+
-					"\"opt4\" : " + "\""+q.opt4+"\""+
+					"\"question\" : " + "\""+q.question.replace('\n','<br />')+"\""+","+
+					"\"options\" : " + "["+
+										"\""+q.opt1+"\""+","+
+										"\""+q.opt2+"\""+","+
+										"\""+q.opt3+"\""+","+
+										"\""+q.opt4+"\""+
+										"]"+
 					"}")
-
