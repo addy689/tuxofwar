@@ -19,19 +19,26 @@ class userPlay(db.Model):
 	questionSet = db.ListProperty(int)
 	tathvaID = db.StringProperty(required=True)
 	startTime = db.DateTimeProperty(required=True)
-	endTime = db.DateTimeProperty
+	endTime = db.IntegerProperty
 
-def userPlayInsert(tid,stime):
+def userPlayStart(tid,stime):
 	u = userPlay(user = users.get_current_user(),
 				questionSet = generateSet(),
 				tathvaID = tid,
 				startTime = stime)
 	u.put()
 	return u.user.nickname() + u.tathvaID
-	
+
+def userPlayStop(etime):
+	query = userPlay.all()
+	u = query.filter('user = ', users.get_current_user()).get()
+	u.endTime = etime
+	u.put()
+	return u.user.nickname() + u.tathvaID + str(u.endTime)
+
 class userAnswers(db.Model):
 	user = user = db.UserProperty(required=True)
 	question = db.IntegerProperty(required=True)
 	answer = db.StringProperty(required=True)
-	elapsedTime = db.DateTimeProperty(required=True)
+	elapsedTime = db.IntegerProperty(required=True)
 
