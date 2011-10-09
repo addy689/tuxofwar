@@ -48,7 +48,7 @@ var xkcd = {
 
 var xkcdDisplay = TerminalShell.commands['display'] = function(terminal, path) {
 	function fail() {
-		terminal.print($('<p>').addClass('error').text('display: unable to open image "'+path+'": No such file or directory.'));
+		terminal.print($('<p>').addClass('error').text('display: Unable to show you the question.'));
 		terminal.setWorking(false);
 	}
 			
