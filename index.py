@@ -22,14 +22,13 @@ class contestStart(webapp.RequestHandler):
 	
 class contestQuestion(webapp.RequestHandler):
 	def get(self,var):
-		user = users.get_current_user()
-		if user:
-			self.response.headers['Content-Type'] = 'text/plain'
-			#self.response.out.write('Hello, ' + user.nickname())
-			self.response.out.write(json.dumps({"question": var, "opt1": "man", "opt2": "cat", "opt3": "touch", "opt4": "does"}))
-			#self.response.out.write(json.dumps(m))
-		else:
-			self.redirect(users.create_login_url(self.request.uri))
+		#user = users.get_current_user()
+		#if user:
+			self.response.headers['Content-Type'] = 'plain/text'
+			r = questiondb.getQuestion(var)
+			self.response.out.write(r)
+		#else:
+			#self.redirect(users.create_login_url(self.request.uri))
 
 class adminQuestionsAdd(webapp.RequestHandler):
 	def get(self):
