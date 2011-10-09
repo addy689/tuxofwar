@@ -18,8 +18,9 @@ var xkcd = {
 	latest: {"num" : 45},
 	last: {"num" : 1},
 	cache: {},
-	base: '/beastie/contest/questions/',
-	
+	baseQ: '/contest/question/',
+	baseA: '/contest/answer/',
+
 	get: function(num, success, error) {
 		if (num === null) {
 			path = '1'; // first question
@@ -35,7 +36,7 @@ var xkcd = {
 			success(this.cache[num]);
 		} else {
 			return $.ajax({
-				url: this.base+path,
+				url: this.baseQ+path,
 				dataType: 'json',
 				success: $.proxy(function(data) {
 					this.last = this.cache[num] = data;
@@ -128,8 +129,11 @@ TerminalShell.commands['answer'] = function(terminal) {
 		terminal.print($('<p>').addClass('error').text('Answer must a an option between A and D '));
 	else if ( submit.question > xkcd.latest.num || submit.question < 0 )
 		terminal.print($('<p>').addClass('error').text('Answer a question b/w 0 and ' + xkcd.latest.num ));
-	else
+	else {
 		terminal.print($('<p>').addClass('question').text('You answered question ' + submit.question +' with option ' + submit.answer ));
+		// Answer submissions if no errors found
+		$.get(xkcd.baseA,submit);
+	}
 };
 
 TerminalShell.commands['sudo'] = function(terminal) {
