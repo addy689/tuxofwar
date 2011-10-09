@@ -16,12 +16,12 @@ function randomChoice(items) {
 
 var xkcd = {
 	latest: {"num" : 45},
-	last: null,
+	last: {"num" : 1},
 	cache: {},
 	base: '/beastie/contest/questions/',
 	
 	get: function(num, success, error) {
-		if (num == null) {
+		if (num === null) {
 			path = '1'; // first question
 		} else if (Number(num)) {
 			path = String(num);
@@ -47,26 +47,25 @@ var xkcd = {
 };
 
 var xkcdDisplay = TerminalShell.commands['display'] = function(terminal, path) {
+
+console.log("last prev : " + xkcd.last.num);
+
 	function fail() {
 		terminal.print($('<p>').addClass('error').text('display: Unable to show you the question.'));
 		terminal.setWorking(false);
 	}
-			
-	if (path) {
-		path = String(path);
-		num = Number(path.match(/^\d+/));
-		filename = pathFilename(path);
-		
-		if (num > xkcd.latest.num) {
+	path = Number(path);
+	if (typeof(path) === 'number') {
+		xkcd.last.num = path;
+		if (path > xkcd.latest.num) {
 			terminal.print("Time travel mode not enabled.");
 			return;
 		}
 	} else {
-		num = xkcd.last.num;
+		terminal.print($('<p>').addClass('error').text('Cannot display the question. Its not a valid number'));
 	}
-	
 	terminal.setWorking(true);
-	xkcd.get(num, function(data) {
+	xkcd.get(path, function(data) {
 		// Stuff to be dome with question data
 		terminal.setWorking(true);
 		terminal.print($('<p>').addClass('question').text(data.question));
@@ -77,7 +76,9 @@ var xkcdDisplay = TerminalShell.commands['display'] = function(terminal, path) {
 			terminal.setWorking(false);
 		},1000);
 	}, fail);
-};
+
+console.log("last now : " + xkcd.last.num);
+}
 
 TerminalShell.commands['next'] = function(terminal) {
 	xkcdDisplay(terminal, xkcd.last.num+1);
