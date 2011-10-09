@@ -15,7 +15,7 @@ function randomChoice(items) {
 }
 
 var xkcd = {
-	latest: null,
+	latest: {"num" : 45},
 	last: null,
 	cache: {},
 	base: '/beastie/contest/questions/',
