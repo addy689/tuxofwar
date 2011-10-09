@@ -14,7 +14,7 @@ code, p, span, td, th { font-size:1em; }
 p, div#display, ul { margin:0; }
 div#screen p, div#screen span, div#screen a { white-space:pre-wrap; }
 div#screen p.error { color:red; }
-div#screen li { list-style:none; }
+div#screen li { list-style:outside outside none; }
 div#welcome { display:none; }
 h1, h2 { background-color:#FFF; color:#000; }
 h3 { color:#00FF00; text-decoration:none; margin:5px 0; }
@@ -40,3 +40,5 @@ div#credit { position:absolute; bottom:0; color:#FFF; font-size:xx-small; opacit
 div#credit:hover { opacity:.75; }
 div#credit a { font-size:xx-small; text-decoration:underline; }
 span#prompt {line-height:40px}
+p.question {line-height:40px; font-size:18px; margin:10px 20px;}
+ol.answers li {list-style: upper-alpha outside none; }
