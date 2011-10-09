@@ -21,19 +21,31 @@ class userPlay(db.Model):
 	startTime = db.DateTimeProperty(required=True)
 	endTime = db.IntegerProperty
 
+def userPlayExist():
+	query = userPlay.all()
+	u = query.filter('user = ', users.get_current_user()).get()
+	if u:
+		return True
+	else:
+		return False
+
 def userPlayStart(tid,stime):
-	u = userPlay(user = users.get_current_user(),
-				questionSet = generateSet(),
-				tathvaID = tid,
-				startTime = stime)
-	u.put()
-	return u.user.nickname() + u.tathvaID
+	if not userPlayExist():
+		u = userPlay(user = users.get_current_user(),
+					questionSet = generateSet(),
+					tathvaID = tid,
+					startTime = stime)
+		u.put()
+		return u.user.nickname() + u.tathvaID
+	else:
+		print "Error. Contest already started."
 
 def userPlayStop(etime):
 	query = userPlay.all()
 	u = query.filter('user = ', users.get_current_user()).get()
-	u.endTime = etime
-	u.put()
+	if not u.endTime
+		u.endTime = etime
+		u.put()
 	return u.user.nickname() + u.tathvaID + str(u.endTime)
 
 class userAnswers(db.Model):
