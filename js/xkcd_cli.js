@@ -531,7 +531,19 @@ TerminalShell.commands['sleep'] = function(terminal, duration) {
 
 // No peeking!
 TerminalShell.commands['help'] = TerminalShell.commands['halp'] = function(terminal) {
-	terminal.print('That would be cheating!');
+	terminal.print($('<h4>').html('Basic help page: Common commands and usages'));
+	terminal.print('');
+	terminal.print('"ls" : list files in the current directory');
+	terminal.print('"cd \<dir\>" : change directory to the new directory');
+	terminal.print('"cd .." : moves to the parent directory');
+	terminal.print('"cat \<file\>" : prints out the contents of a file');
+	terminal.print('"help" : for this help file');
+	terminal.print('');
+	terminal.print($('<h4>').html('Basically every other unix command works and we have extras, Like'));
+	terminal.print('sudo       su       rm       man        whoami');
+	terminal.print('who        wget     light    sleep      locate');	
+	terminal.print('shutdown   logout   exit     quit       goto');
+	terminal.print('apt-get    cheat     ');
 }; 
 
 TerminalShell.fallback = function(terminal, cmd) {
