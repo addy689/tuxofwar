@@ -102,14 +102,6 @@ TerminalShell.commands['random'] = function(terminal) {
 	xkcdDisplay(terminal, getRandomInt(1, xkcd.latest.num));
 };
 
-TerminalShell.commands['goto'] = function(terminal, subcmd) {
-	$('#screen').one('cli-ready', function(e) {
-		terminal.print('Did you mean "display"?');
-	});
-	xkcdDisplay(terminal, 292);
-};
-
-
 TerminalShell.commands['sudo'] = function(terminal) {
 	var cmd_args = Array.prototype.slice.call(arguments);
 	cmd_args.shift(); // terminal
