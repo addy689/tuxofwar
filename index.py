@@ -1,12 +1,16 @@
 import os
-import time
+import datetime
 import string
+import timer
+import userdb
 import questiondb
 import simplejson as json
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
+
+userTime = timer.Timer()
 
 class index(webapp.RequestHandler):
 	def get(self):
@@ -15,18 +19,28 @@ class index(webapp.RequestHandler):
 		self.response.out.write(template.render(path,""))
 
 class contestStart(webapp.RequestHandler):
+	def get(self,var):
+		user = users.get_current_user()
+		if not user:
+			self.redirect(users.create_login_url(self.request.uri))
+			self.response.out.write("bla")
+		else:
+			print userdb.userPlayStart(var,userTime.start())
+
+
+class contestStop(webapp.RequestHandler):
 	def get(self):
-		self.response.out.write(time.time())
-		self.response.out.write("<br />")
-		self.response.out.write(time.time()-1317815757.3)
-	
+		self.response.out.write(userTime.elapsed())
+		self.response.out.write(userdb.userPlayStop(userTime.stop()))
+		
+
 class contestQuestion(webapp.RequestHandler):
 	def get(self,var):
 		#user = users.get_current_user()
 		#if user:
-			self.response.headers['Content-Type'] = 'plain/text'
-			r = questiondb.getQuestion(var)
-			self.response.out.write(r)
+			#self.response.headers['Content-Type'] = 'plain/text'
+		r = questiondb.getQuestion(var)
+		self.response.out.write(r)
 		#else:
 			#self.redirect(users.create_login_url(self.request.uri))
 
@@ -59,7 +73,8 @@ class adminQuestionsList(webapp.RequestHandler):
 
 application = webapp.WSGIApplication(
 									[('/', index),
-									('/contest/start(|/)',contestStart),
+									('/contest/start/(.*)/',contestStart),
+									('/contest/stop/',contestStop),
 									('/contest/question/(\d)/', contestQuestion),
 									('/admin/questions/add/', adminQuestionsAdd),
 									('/admin/questions/submit/', adminQuestionsSubmit),
