@@ -102,13 +102,20 @@ TerminalShell.commands['random'] = function(terminal) {
 	xkcdDisplay(terminal, getRandomInt(1, xkcd.latest.num));
 };
 
-TerminalShell.commands['goto'] = function(terminal, subcmd) {
-	$('#screen').one('cli-ready', function(e) {
-		terminal.print('Did you mean "display"?');
-	});
-	xkcdDisplay(terminal, 292);
+TerminalShell.commands['answer'] = function(terminal) {
+	// answer --question 2 --answer A
+	var cmd_args = Array.prototype.slice.call(arguments);
+	cmd_args.shift(); // terminal
+	console.log(cmd_args);
+	var submit = { "question" : -1, "answer" : -1 };
+	for( q=0; q < cmd_args.length; q += 1 ) {
+		if ( cmd_args[q] === '--question' | cmd_args[q] === '-q' | cmd_args[q] === '-Q')
+			submit.question = cmd_args[q+1]
+		if ( cmd_args[q] === '--answer' | cmd_args[q] === '-a' | cmd_args[q] === '-A')
+			submit.answer = cmd_args[q+1]
+	}
+	terminal.print($('<p>').addClass('question').text('You answered question ' + submit.question +' with option ' + submit.answer ));
 };
-
 
 TerminalShell.commands['sudo'] = function(terminal) {
 	var cmd_args = Array.prototype.slice.call(arguments);
