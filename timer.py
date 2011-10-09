@@ -4,6 +4,9 @@
 
 import datetime
 
+def returnInt(t):
+	return int((t.microseconds)/1000)
+
 class Timer(object):
 	"""A simple timer class"""
 	
@@ -18,7 +21,7 @@ class Timer(object):
 	def stop(self, message="Total: "):
 		"""Stops the timer.  Returns the time elapsed"""
 		self.stop = datetime.datetime.now()
-		return self.stop - self.start
+		return returnInt(self.stop - self.start)
 	
 	def now(self, message="Now: "):
 		"""Returns the current time with a message"""
@@ -26,7 +29,7 @@ class Timer(object):
 	
 	def elapsed(self, message="Elapsed: "):
 		"""Time elapsed since start was called"""
-		return datetime.datetime.now() - self.start
+		return returnInt(datetime.datetime.now() - self.start)
 	
 	def split(self, message="Split started at: "):
 		"""Start a split timer"""
@@ -35,4 +38,4 @@ class Timer(object):
 	
 	def unsplit(self, message="Unsplit: "):
 		"""Stops a split. Returns the time elapsed since split was called"""
-		return datetime.datetime.now() - self.split_start
+		return returnInt(datetime.datetime.now() - self.split_start)
