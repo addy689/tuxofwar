@@ -13,16 +13,15 @@ class question(db.Model):
 	
 def getQuestion(num):
 	query = question.all()
-	result = query.fetch(45)
-	for q in result:
-		if q.questionNumber == string.atoi(num):
-			return ("{"+
-					"\"question\" : "+"\""+q.question.replace('\n','<br />')+"\""+","+
-					"\"image\" : "+"\""+q.qimage+"\""+","+ 
-					"\"options\" : " + "["+
-										"\""+q.opt1.replace('\n','<br />')+"\""+","+
-										"\""+q.opt2.replace('\n','<br />')+"\""+","+
-										"\""+q.opt3.replace('\n','<br />')+"\""+","+
-										"\""+q.opt4.replace('\n','<br />')+"\""+
-										"]"+
-					"}")
+	q = query.filter('questionNumber =',string.atoi(num)).get()
+	if q:
+		return ("{"+
+				"\"question\" : "+"\""+q.question.replace('\n','<br />')+"\""+","+
+				"\"image\" : "+"\""+q.qimage+"\""+","+ 
+				"\"options\" : " + "["+
+									"\""+q.opt1.replace('\n','<br />')+"\""+","+
+									"\""+q.opt2.replace('\n','<br />')+"\""+","+
+									"\""+q.opt3.replace('\n','<br />')+"\""+","+
+									"\""+q.opt4.replace('\n','<br />')+"\""+
+									"]"+
+				"}")
