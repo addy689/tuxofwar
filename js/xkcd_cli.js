@@ -18,8 +18,9 @@ var xkcd = {
 	latest: {"num" : 45},
 	last: {"num" : 1},
 	cache: {},
-	base: '/beastie/contest/questions/',
-	
+	baseQ: '/contest/question/',
+	baseA: '/contest/answer/',
+
 	get: function(num, success, error) {
 		if (num === null) {
 			path = '1'; // first question
@@ -35,7 +36,7 @@ var xkcd = {
 			success(this.cache[num]);
 		} else {
 			return $.ajax({
-				url: this.base+path,
+				url: this.baseQ+path,
 				dataType: 'json',
 				success: $.proxy(function(data) {
 					this.last = this.cache[num] = data;
@@ -103,18 +104,36 @@ TerminalShell.commands['random'] = function(terminal) {
 };
 
 TerminalShell.commands['answer'] = function(terminal) {
-	// answer --question 2 --answer A
 	var cmd_args = Array.prototype.slice.call(arguments);
 	cmd_args.shift(); // terminal
 	console.log(cmd_args);
 	var submit = { "question" : -1, "answer" : -1 };
 	for( q=0; q < cmd_args.length; q += 1 ) {
 		if ( cmd_args[q] === '--question' | cmd_args[q] === '-q' | cmd_args[q] === '-Q')
-			submit.question = cmd_args[q+1]
+			submit.question = Number(cmd_args[q+1]);
 		if ( cmd_args[q] === '--answer' | cmd_args[q] === '-a' | cmd_args[q] === '-A')
-			submit.answer = cmd_args[q+1]
+			submit.answer = cmd_args[q+1].toString().toUpperCase();
 	}
-	terminal.print($('<p>').addClass('question').text('You answered question ' + submit.question +' with option ' + submit.answer ));
+
+	if ( submit.question === -1 ) {
+		if (typeof(xkcd.last.num) === 'undefined') {
+			console.log("undefined");
+			submit.question = -1;
+		} else
+			submit.question = xkcd.last.num;
+	}
+
+	if ( submit.answer === -1 )
+		terminal.print($('<p>').addClass('error').text('Enter an answer'));
+	else if ( submit.answer < 'A' || submit.answer > 'D' )
+		terminal.print($('<p>').addClass('error').text('Answer must a an option between A and D '));
+	else if ( submit.question > xkcd.latest.num || submit.question < 0 )
+		terminal.print($('<p>').addClass('error').text('Answer a question b/w 0 and ' + xkcd.latest.num ));
+	else {
+		terminal.print($('<p>').addClass('question').text('You answered question ' + submit.question +' with option ' + submit.answer ));
+		// Answer submissions if no errors found
+		$.get(xkcd.baseA,submit);
+	}
 };
 
 TerminalShell.commands['sudo'] = function(terminal) {
