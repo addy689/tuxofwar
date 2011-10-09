@@ -67,26 +67,14 @@ var xkcdDisplay = TerminalShell.commands['display'] = function(terminal, path) {
 	
 	terminal.setWorking(true);
 	xkcd.get(num, function(data) {
-		if (!filename || (filename == pathFilename(data.img))) {
-			$('<img>')
-				.hide()
-				.load(function() {
-					terminal.print($('<h3>').text(data.num+": "+data.title));
-					$(this).fadeIn();
-					
-					var comic = $(this);
-					if (data.link) {
-						comic = $('<a>').attr('href', data.link).append($(this));
-					}
-					terminal.print(comic);
-					
-					terminal.setWorking(false);
-				})
-				.attr({src:data.img, alt:data.title, title:data.alt})
-				.addClass('comic');
-		} else {
-			fail();
-		}
+		// Stuff to be dome with question data
+		terminal.setWorking(true);
+		terminal.print(data.question);
+
+		setTimeout(function(){
+			terminal.setWorking(false);
+		},1000)
+			
 	}, fail);
 };
 
