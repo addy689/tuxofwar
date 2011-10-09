@@ -364,55 +364,8 @@ TerminalShell.commands['rm'] = function(terminal, flags, path) {
 };
 
 TerminalShell.commands['cheat'] = function(terminal) {
-	terminal.print($('<a>').text('*** FREE SHIPPING ENABLED ***').attr('href', 'http://store.xkcd.com/'));
+	terminal.print($('<a>').text('*** You did not mean it, did you ? ***').attr('href', 'http://tathva.org/'));
 }; 
-
-TerminalShell.commands['reddit'] = function(terminal, num) {
-	num = Number(num);
-	if (num) {
-		url = 'http://xkcd.com/'+num+'/';
-	} else {
-		var url = window.location;
-	}
-	terminal.print($('<iframe src="http://www.reddit.com/static/button/button1.html?width=140&url='+encodeURIComponent(url)+'&newwindow=1" height="22" width="140" scrolling="no" frameborder="0"></iframe>'));
-};
-
-TerminalShell.commands['wget'] = TerminalShell.commands['curl'] = function(terminal, dest) {
-	if (dest) {
-		terminal.setWorking(true);
-		var browser = $('<div>')
-			.addClass('browser')
-			.append($('<iframe>')
-					.attr('src', dest).width("100%").height(600)
-					.one('load', function() {
-						terminal.setWorking(false);
-					}));
-		terminal.print(browser);
-		return browser;
-	} else {
-		terminal.print("Please specify a URL.");
-	}
-};
-
-TerminalShell.commands['write'] =
-TerminalShell.commands['irc'] = function(terminal, nick) {
-	if (nick) {
-		$('.irc').slideUp('fast', function() {
-			$(this).remove();
-		});
-		var url = "http://widget.mibbit.com/?server=irc.foonetic.net&channel=%23xkcd";
-		if (nick) {
-			url += "&nick=" + encodeURIComponent(nick);
-		}
-		TerminalShell.commands['curl'](terminal, url).addClass('irc');
-	} else {
-		terminal.print('usage: irc <nick>');
-	}
-};
-
-TerminalShell.commands['unixkcd'] = function(terminal, nick) {
-	TerminalShell.commands['curl'](terminal, "http://www.xkcd.com/unixkcd/");
-};
 
 TerminalShell.commands['apt-get'] = function(terminal, subcmd) {
 	if (!this.sudo && (subcmd in {'update':true, 'upgrade':true, 'dist-upgrade':true})) {
@@ -487,7 +440,7 @@ TerminalShell.commands['locate'] = function(terminal, what) {
 
 Adventure = {
 	rooms: {
-		0:{description:'You are at a computer using unixkcd.', exits:{west:1, south:10}},
+		0:{description:'You are at a computer using tathva2011.', exits:{west:1, south:10}},
 		1:{description:'Life is peaceful there.', exits:{east:0, west:2}},
 		2:{description:'In the open air.', exits:{east:1, west:3}},
 		3:{description:'Where the skies are blue.', exits:{east:2, west:4}},
@@ -585,7 +538,7 @@ TerminalShell.fallback = function(terminal, cmd) {
 	oneliners = {
 		'make me a sandwich': 'What? Make it yourself.',
 		'make love': 'I put on my robe and wizard hat.',
-		'i read the source code': '<3',
+		'i read the source code': 'We <3 you',
 		'pwd': 'You are in a maze of twisty passages, all alike.',
 		'lpr': 'PC LOAD LETTER',
 		'hello joshua': 'How about a nice game of Global Thermonuclear War?',
@@ -593,10 +546,10 @@ TerminalShell.fallback = function(terminal, cmd) {
 		'date': 'March 32nd',
 		'hello': 'Why hello there!',
 		'who': 'Doctor Who?',
-		'xkcd': 'Yes?',
+		'tathva': 'Yes! What can we do for you ?',
 		'su': 'God mode activated. Remember, with great power comes great ... aw, screw it, go have fun.',
 		'fuck': 'I have a headache.',
-		'whoami': 'You are Richard Stallman.',
+		'whoami': 'You are tux maniac.',
 		'nano': 'Seriously? Why don\'t you just use Notepad.exe? Or MS Paint?',
 		'top': 'It\'s up there --^',
 		'moo':'moo',
@@ -634,7 +587,7 @@ TerminalShell.fallback = function(terminal, cmd) {
 		} else if  (cmd == "hint") {
 			terminal.print(randomChoice([
  				'We offer some really nice polos.',
- 				$('<p>').html('This terminal will remain available at <a href="http://xkcd.com/unixkcd/">http://xkcd.com/unixkcd/</a>'),
+ 				$('<p>').html('This terminal will remain available at <a href="http://tuxofwar2011.appspot.com">tuxofwar2011.appspot.com</a>'),
  				'Use the source, Luke!',
  				'There are cheat codes.'
  			]));
@@ -654,7 +607,6 @@ TerminalShell.fallback = function(terminal, cmd) {
 	return true;
 };
 
-var konamiCount = 0;
 $(document).ready(function() {
 	Terminal.promptActive = false;
 	function noData() {
@@ -664,39 +616,5 @@ $(document).ready(function() {
 	$('#screen').bind('cli-load', function(e) {
 		Terminal.runCommand('cat welcome.txt');
 	});
-	
-	$(document).konami(function(){
-		function shake(elems) {
-			elems.css('position', 'relative');
-			return window.setInterval(function() {
-				elems.css({top:getRandomInt(-3, 3), left:getRandomInt(-3, 3)});
-			}, 100);	
-		}
-		
-		if (konamiCount == 0) {
-			$('#screen').css('text-transform', 'uppercase');
-		} else if (konamiCount == 1) {
-			$('#screen').css('text-shadow', 'gray 0 0 2px');
-		} else if (konamiCount == 2) {
-			$('#screen').css('text-shadow', 'orangered 0 0 10px');
-		} else if (konamiCount == 3) {
-			shake($('#screen'));
-		} else if (konamiCount == 4) {
-			$('#screen').css('background', 'url(/unixkcd/over9000.png) center no-repeat');
-		}
-		
-		$('<div>')
-			.height('100%').width('100%')
-			.css({background:'white', position:'absolute', top:0, left:0})
-			.appendTo($('body'))
-			.show()
-			.fadeOut(1000);
-		
-		if (Terminal.buffer.substring(Terminal.buffer.length-2) == 'ba') {
-			Terminal.buffer = Terminal.buffer.substring(0, Terminal.buffer.length-2);
-			Terminal.updateInputDisplay();
-		}
-		TerminalShell.sudo = true;
-		konamiCount += 1;
-	});
+
 });
