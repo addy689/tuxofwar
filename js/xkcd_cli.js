@@ -649,6 +649,14 @@ $(document).ready(function() {
 	}
 	$('#screen').bind('cli-load', function(e) {
 		Terminal.runCommand('cat welcome.txt');
+		var dur = 1800, kill = setInterval(function(){
+			$("#timer").text("You have " + Math.floor((dur/60)) + "minutes " + Math.floor((dur%60)) +  "seconds left");
+			dur -= 1;
+			if (dur === 0) {
+				clearTimeout(kill);
+				window.location = xkcd.baseE;
+			}
+		},1000);
 	});
 
 });
