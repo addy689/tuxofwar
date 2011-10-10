@@ -13,7 +13,7 @@ class question(db.Model):
 	
 def getQuestion(num):
 	query = question.all()
-	q = query.filter('questionNumber =',string.atoi(num)).get()
+	q = query.filter('questionNumber =',num).get()
 	if q:
 		return ("{"+
 				"\"question\" : "+"\""+q.question.replace('\n','<br />')+"\""+","+
