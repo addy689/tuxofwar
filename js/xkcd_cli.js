@@ -246,7 +246,7 @@ Filesystem = {
 		terminal.print('The contest opens at 10pm tonight. You may login upto 10:30 pm to finish the contest in time.');
 		terminal.print('cat instruction.txt before participating');
 		terminal.print('use start <tathva TuxOfWar team id> to start the contest. e.g. start TOW1234');
-		terminal.print($('<h3>').text('Battle it out with Tux this Tathva!'));
+		terminal.print($('<h3>').text('The contest will start soon, you will be notified here. Please be patient.'));
 	}},
 	'datetime.txt': {type:'file', read:function(terminal) {
 		terminal.print($('<h3>').text('Date and Time'));
@@ -307,47 +307,31 @@ Filesystem = {
 		terminal.print('scripting - tldp.org absg');
 		terminal.print('some linux tutorials');
 	}},*/
-'Instructions.txt': {type:'file', read:function(terminal) {
-	terminal.print($('<h3>').text('Tux of War contest Instructions'));
-	terminal.print('You will get 30 minutes for attempting the questions.');
-	terminal.print('There will be total of 45 questions, answer as many as you can.');
-	terminal.print('Marking scheme: +4 for correct, -1 for incorrect answer.');
-	terminal.print('Decision of co-ordinators will be final.');
-	terminal.print($('<br />'));
-	terminal.print($('<h3>').text('How to compete:'));
-	terminal.print('Do not reload or logout once you start the competition. ');
-	terminal.print('Use the following command to use the contest console:');
-	terminal.print('start <tathva team id>');
-	terminal.print('e.g. start TOW1001');
-	terminal.print($('<br />'));
-	terminal.print('Once the contest starts to view any question type the command:');
-	terminal.print('display <ques_no> OR question <ques_no> ');
-	terminal.print('e.g. for question no. 5 type command `question 5`');
-	terminal.print('question number must be between 1 and 45');
-	terminal.print($('<br />'));
-	terminal.print('To answer any question type :');
-	terminal.print('answer -q <ques_no> -a <ans_option>');
-	terminal.print('e.g. To answer question number 5 with option B type ');
-	terminal.print('answer -q 5 -a B');
-	terminal.print($('<br />'));
-	terminal.print('use next prev to switch between questions');
-	terminal.print('and random to go to random question ;-)');
-	}},
-'welcomelogin.txt': {type:'file', read:function(terminal) {
-	terminal.print('Contest started...'); 
-	terminal.print('Do not reload or logout.'); 
-	terminal.print('Use the following command to use the contest console:'); 
-	terminal.print('To view any question type the command:'); 
-	terminal.print('question <ques_no> '); 
-	terminal.print('e.g. for question no. 5 type command '); 
-	terminal.print('question 5'); 
-	terminal.print('question number must be between 1 and 45'); 
-	terminal.print('To answer any question type :'); 
-	terminal.print('answer -q <ques_no> -a <ans_option>'); 
-	terminal.print('e.g. To answer question number 5 with option B type '); 
-	terminal.print('answer -q 5 -a B'); 
-	terminal.print('use next prev to switch between questions'); 
-	terminal.print('and random to go to random question ;-)');
+	'instructions.txt': {type:'file', read:function(terminal) {
+		terminal.print($('<h3>').text('Tux of War contest Instructions'));
+		terminal.print('You will get 30 minutes for attempting the questions.');
+		terminal.print('There will be total of 45 questions, answer as many as you can.');
+		terminal.print('Marking scheme: +4 for correct, -1 for incorrect answer.');
+		terminal.print('Decision of co-ordinators will be final.');
+		terminal.print($('<br />'));
+		terminal.print($('<h3>').text('How to compete:'));
+		terminal.print('Do not reload or logout once you start the competition. ');
+		terminal.print('Use the following command to use the contest console:');
+		terminal.print('start <tathva team id>');
+		terminal.print('e.g. start TOW1001');
+		terminal.print($('<br />'));
+		terminal.print('Once the contest starts to view any question type the command:');
+		terminal.print('display <ques_no> OR question <ques_no> ');
+		terminal.print('e.g. for question no. 5 type command `question 5`');
+		terminal.print('question number must be between 1 and 45');
+		terminal.print($('<br />'));
+		terminal.print('To answer any question type :');
+		terminal.print('answer -q <ques_no> -a <ans_option>');
+		terminal.print('e.g. To answer question number 5 with option B type ');
+		terminal.print('answer -q 5 -a B');
+		terminal.print($('<br />'));
+		terminal.print('use next prev to switch between questions');
+		terminal.print('and random to go to random question ;-)');
 	}},
 	'contacts.txt': {type:'file', read:function(terminal) {
 		terminal.print($('<h3>').text('Contact Info'));
@@ -743,6 +727,23 @@ $(document).ready(function() {
 		/* Example implementation : var cid = getUrlVars()['id']; */
 
 		if(getUrlVars()['auth']) {
+			
+		terminal.print('Contest started...'); 
+		terminal.print('Do not reload or logout.'); 
+		terminal.print('Use the following command to use the contest console:'); 
+		terminal.print('To view any question type the command:'); 
+		terminal.print('question <ques_no> '); 
+		terminal.print('e.g. for question no. 5 type command '); 
+		terminal.print('question 5'); 
+		terminal.print('question number must be between 1 and 45'); 
+		terminal.print('To answer any question type :'); 
+		terminal.print('answer -q <ques_no> -a <ans_option>'); 
+		terminal.print('e.g. To answer question number 5 with option B type '); 
+		terminal.print('answer -q 5 -a B'); 
+		terminal.print('use next prev to switch between questions'); 
+		terminal.print('and random to go to random question ;-)');
+
+
 			var dur = 1800, kill = setInterval(function(){
 				$("#timer").text(Math.floor((dur/60)) + " minutes " + Math.floor((dur%60)) +" seconds left");
 				dur -= 1;
