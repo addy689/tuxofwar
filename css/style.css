@@ -36,9 +36,9 @@ iframe { margin:0; border:none; }
 div.browser { margin:5px 2px; outline:2px solid gray; }
 form#searchform input[type=text] { background-color:#000; border:1px solid #FFF; color:#FFF; font-family:"Courier New",Courier,monospace; width:100px; }
 form#searchform input[type=submit] { background-color:#FFF; border:1px solid #000; color:#000; font-family:"Courier New",Courier,monospace; font-size:1em; }
-div#credit { position:absolute; bottom:0; color:#FFF; font-size:xx-small; opacity:.25; }
+div#credit { position:absolute; bottom:0; color:#FFF; font-size:16px; opacity:.25; }
 div#credit:hover { opacity:.75; }
-div#credit a { font-size:xx-small; text-decoration:underline; }
+div#credit a { font-size:16px; text-decoration:underline; }
 span#prompt {line-height:40px}
 p.question {line-height:40px; font-size:18px; margin:10px 20px;}
 ol.answers li {list-style: upper-alpha outside none; }
