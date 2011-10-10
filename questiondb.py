@@ -4,7 +4,7 @@ from google.appengine.ext import db
 class question(db.Model):
 	questionNumber = db.IntegerProperty(required=True)
 	question = db.StringProperty(required=True, multiline=True)
-	qimage = db.StringProperty(required=True)
+	qimage = db.StringProperty
 	opt1 = db.StringProperty(required=True, multiline=True)
 	opt2 = db.StringProperty(required=True, multiline=True)
 	opt3 = db.StringProperty(required=True, multiline=True)
