@@ -37,8 +37,6 @@ def userPlayStart(tid):
 					startTime = datetime.datetime.now())
 		u.put()
 		return u.user.nickname() + u.tathvaID
-	else:
-		print "Error. Contest already started."
 
 def userPlayStop():
 	query = userPlay.all()
@@ -53,10 +51,15 @@ def userElapsedTime():
 	u = query.filter('user = ', users.get_current_user()).get()
 	return ((datetime.datetime.now() - u.startTime).microseconds/1000)
 
-def userSetQuestion(num):
+def userPermutation(num):
 	query = userPlay.all()
 	u = query.filter('user = ', users.get_current_user()).get()
 	return u.questionSet[num-1]
+
+def userReversePermutation(num):
+	query = userPlay.all()
+	u = query.filter('user = ', users.get_current_user()).get()
+	return u.questionSet.index(num)
 
 class userAnswer(db.Model):
 	user = user = db.UserProperty(required=True)
