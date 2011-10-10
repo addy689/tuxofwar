@@ -1,7 +1,6 @@
 import os
 import datetime
 import string
-import timer
 import userdb
 import questiondb
 import simplejson as json
@@ -9,8 +8,6 @@ from google.appengine.ext.webapp import template
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
-
-userTime = timer.Timer()
 
 class index(webapp.RequestHandler):
 	def get(self):
@@ -23,26 +20,26 @@ class contestStart(webapp.RequestHandler):
 		user = users.get_current_user()
 		if not user:
 			self.redirect(users.create_login_url(self.request.uri))
-			self.response.out.write("bla")
 		else:
-			print userdb.userPlayStart(var,userTime.start())
+			print userdb.userPlayStart(var)
 
 
 class contestStop(webapp.RequestHandler):
 	def get(self):
-		self.response.out.write(userTime.elapsed())
-		self.response.out.write(userdb.userPlayStop(userTime.stop()))
+		self.response.out.write(userdb.userPlayStop())
 		
 
 class contestQuestion(webapp.RequestHandler):
 	def get(self,var):
-		#user = users.get_current_user()
-		#if user:
-			#self.response.headers['Content-Type'] = 'plain/text'
-		r = questiondb.getQuestion(var)
-		self.response.out.write(r)
-		#else:
-			#self.redirect(users.create_login_url(self.request.uri))
+		user = users.get_current_user()
+		if user:
+			r = questiondb.getQuestion(var)
+			self.response.out.write(r)
+
+class contestAnswer(webapp.RequestHandler):
+	def get(self):
+		self.response.out.write(userdb.userAnswerSubmit(int(self.request.get('question')),
+								self.request.get('answer')))
 
 class adminQuestionsAdd(webapp.RequestHandler):
 	def get(self):
@@ -71,14 +68,25 @@ class adminQuestionsList(webapp.RequestHandler):
 		path = os.path.join(os.path.dirname(__file__), 'templates/questionlist.html')
 		self.response.out.write(template.render(path, template_values))
 
+class adminSubmittedAnswers(webapp.RequestHandler):
+	def get(self):
+		self.response.headers['Content-Type'] = 'text/html'
+		query = userdb.userAnswer.all().order('elapsedTime')
+		result = query.fetch(100)
+		for ans in result:
+			self.response.out.write(ans.user.nickname() + str(ans.question) + ans.answer + str(ans.elapsedTime) + "<br />")
+
+
 application = webapp.WSGIApplication(
 									[('/', index),
-									('/contest/start/(.*)/',contestStart),
+									('/contest/start/(.*)|/',contestStart),
 									('/contest/stop/',contestStop),
-									('/contest/question/(\d)/', contestQuestion),
+									('/contest/question/(\d)|/', contestQuestion),
+									('/contest/answer/', contestAnswer),
 									('/admin/questions/add/', adminQuestionsAdd),
 									('/admin/questions/submit/', adminQuestionsSubmit),
-									('/admin/questions/list/',adminQuestionsList)],
+									('/admin/questions/list/',adminQuestionsList),
+									('/admin/submitted/answers/',adminSubmittedAnswers)],
 									debug=True)
 
 def main():
