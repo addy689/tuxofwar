@@ -20,6 +20,7 @@ var xkcd = {
 	cache: {},
 	baseQ: '/contest/question/',
 	baseA: '/contest/answer/',
+	baseR: '/contest/start/',
 
 	get: function(num, success, error) {
 		if (num === null) {
@@ -133,6 +134,14 @@ TerminalShell.commands['answer'] = function(terminal) {
 		terminal.print($('<p>').addClass('question').text('You answered question ' + submit.question +' with option ' + submit.answer ));
 		// Answer submissions if no errors found
 		$.get(xkcd.baseA,submit);
+	}
+};
+
+TerminalShell.commands['start'] = function(terminal, tatID) {
+	if (tatID === '' | typeof(tatID) === 'undefined' ) {
+		terminal.print($('<p>').addClass('error').text('Please enter a valid tathva ID of the form TAT1234'));
+	} else {
+		window.location = xkcd.baseR + tatID.toString()
 	}
 };
 
