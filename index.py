@@ -37,10 +37,9 @@ class contestQuestion(webapp.RequestHandler):
 			self.response.out.write(r)
 
 class contestAnswer(webapp.RequestHandler):
-	if userdb.userPlayExist():
-		def get(self):
-			self.response.out.write(userdb.userAnswerSubmit(int(self.request.get('question')),
-									self.request.get('answer')))
+	def get(self):
+		self.response.out.write(userdb.userAnswerSubmit(int(self.request.get('question')),
+								self.request.get('answer')))
 
 class adminQuestionsAdd(webapp.RequestHandler):
 	def get(self):
