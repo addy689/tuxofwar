@@ -649,14 +649,29 @@ $(document).ready(function() {
 	}
 	$('#screen').bind('cli-load', function(e) {
 		Terminal.runCommand('cat welcome.txt');
-		var dur = 1800, kill = setInterval(function(){
-			$("#timer").text("You have " + Math.floor((dur/60)) + "minutes " + Math.floor((dur%60)) +  "seconds left");
-			dur -= 1;
-			if (dur === 0) {
-				clearTimeout(kill);
-				window.location = xkcd.baseE;
+		/* Read a page's GET URL variables and return them as an associative array. */
+		/* Example implementation : var cid = getUrlVars()['id']; */
+
+		function getUrlVars() {
+			var vars = [], hash;
+			var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+			for(var i = 0; i < hashes.length; i++) {
+				hash = hashes[i].split('=');
+				vars.push(hash[0]);
+				vars[hash[0]] = hash[1];
 			}
-		},1000);
+			return vars;
+		}
+		if(getUrlVars()['auth']) {
+			var dur = 1800, kill = setInterval(function(){
+				$("#timer").text(Math.floor((dur/60)) + " minutes " + Math.floor((dur%60)) +" seconds left");
+				dur -= 1;
+				if (dur === 0) {
+					clearTimeout(kill);
+					window.location = xkcd.baseE;
+				}
+			},1000);
+		}
 	});
 
 });
