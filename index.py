@@ -21,7 +21,8 @@ class contestStart(webapp.RequestHandler):
 		if not user:
 			self.redirect(users.create_login_url(self.request.uri))
 		else:
-			print userdb.userPlayStart(var)
+			userdb.userPlayStart(var)
+			self.redirect('/')
 
 
 class contestStop(webapp.RequestHandler):
@@ -30,15 +31,16 @@ class contestStop(webapp.RequestHandler):
 		
 
 class contestQuestion(webapp.RequestHandler):
-	def get(self,var):
-		user = users.get_current_user()
-		if user:
-			r = questiondb.getQuestion(var)
-			self.response.out.write(r)
+	if userdb.userPlayExist():
+		def get(self,var):
+			user = users.get_current_user()
+			if user:
+				r = questiondb.getQuestion(int(userdb.userSetQuestion(int(var))))
+				self.response.out.write(r)
 
 class contestAnswer(webapp.RequestHandler):
 	def get(self):
-		self.response.out.write(userdb.userAnswerSubmit(int(self.request.get('question')),
+		self.response.out.write(userdb.userAnswerSubmit(userdb.userSetQuestion(int(self.request.get('question'))),
 								self.request.get('answer')))
 
 class adminQuestionsAdd(webapp.RequestHandler):
@@ -58,6 +60,7 @@ class adminQuestionsSubmit(webapp.RequestHandler):
 								opt4=self.request.get('opt4'),
 								ans=self.request.get('ans'))
 		q.put()
+		self.redirect('/admin/questions/list/')
 
 class adminQuestionsList(webapp.RequestHandler):
 	def get(self):
@@ -91,7 +94,7 @@ application = webapp.WSGIApplication(
 									[('/', index),
 									('/contest/start/(.*)|/',contestStart),
 									('/contest/stop/',contestStop),
-									('/contest/question/(\d)|/', contestQuestion),
+									('/contest/question/(\d*)|/', contestQuestion),
 									('/contest/answer/', contestAnswer),
 									('/admin/questions/add/', adminQuestionsAdd),
 									('/admin/questions/submit/', adminQuestionsSubmit),
