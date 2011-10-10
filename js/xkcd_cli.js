@@ -105,6 +105,7 @@ TerminalShell.commands['random'] = function(terminal) {
 };
 
 TerminalShell.commands['answer'] = function(terminal) {
+	// answer  (-a|-A|--answer) [A-D] ( (-q|-Q|--question) \d ) ?
 	var cmd_args = Array.prototype.slice.call(arguments);
 	cmd_args.shift(); // terminal
 	console.log(cmd_args);
