@@ -21,6 +21,7 @@ var xkcd = {
 	baseQ: '/contest/question/',
 	baseA: '/contest/answer/',
 	baseR: '/contest/start/',
+	baseE: '/contest/stop/',
 
 	get: function(num, success, error) {
 		if (num === null) {
