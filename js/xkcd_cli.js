@@ -141,9 +141,12 @@ TerminalShell.commands['answer'] = function(terminal) {
 
 TerminalShell.commands['start'] = function(terminal, tatID) {
 	if (tatID === '' | typeof(tatID) === 'undefined' ) {
-		terminal.print($('<p>').addClass('error').text('Please enter a valid tathva ID of the form TAT1234'));
+		terminal.print($('<p>').addClass('error').text('Please enter a valid tathva team ID of the form TOW1234'));
 	} else {
-		window.location = xkcd.baseR + tatID.toString()
+		if (/tow\d{4}/i.test(tatID))
+			window.location = xkcd.baseR + tatID.toString()
+		else
+			terminal.print($('<p>').addClass('error').text('Please enter a valid tathva team ID of the form TOW1234'));
 	}
 };
 
