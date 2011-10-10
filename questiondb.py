@@ -4,18 +4,19 @@ from google.appengine.ext import db
 class question(db.Model):
 	questionNumber = db.IntegerProperty(required=True)
 	question = db.StringProperty(required=True, multiline=True)
-	qimage = db.StringProperty
+	qimage = db.StringProperty()
 	opt1 = db.StringProperty(required=True, multiline=True)
 	opt2 = db.StringProperty(required=True, multiline=True)
 	opt3 = db.StringProperty(required=True, multiline=True)
 	opt4 = db.StringProperty(required=True, multiline=True)
 	ans = db.StringProperty(required=True)
-	
+
 def getQuestion(num):
 	query = question.all()
 	q = query.filter('questionNumber =',num).get()
 	if q:
 		return ("{"+
+				"\"num\" : " + "\"" + q.questionNumber + "\"" +","+
 				"\"question\" : "+"\""+q.question.replace('\n','<br />')+"\""+","+
 				"\"image\" : "+"\""+q.qimage+"\""+","+ 
 				"\"options\" : " + "["+
