@@ -269,8 +269,8 @@ Filesystem = {
 	}},
 	'reginfo.txt': {type:'file', read:function(terminal) {
 		terminal.print($('<h3>').text('Registration Info'));
-		terminal.print(' - Both members of the team have to register on the Tathva Site [http://tathva.org/2011/#!register] to receive individual Tathva IDs. The team captain should use a Google account for registration, this will be required for logging into the contest portal.');
-		terminal.print(' - Then, the team captain has to register for Tux of War using Event Registration page at Tathva site [http://tathva.org/2011/index.php#!eventregister] specifying the partners tathva ID to obtain a team ID.');
+		terminal.print($('<p>').html(' - Both members of the team have to <a href="http://tathva.org/2011/#!register" target="_blank">register on the Tathva Site</a> to receive individual Tathva IDs. The team captain should use a Google account for registration, this will be required for logging into the contest portal.'));
+		terminal.print($('<p>').html(' - Then, the team captain has to register for Tux of War using <a href="http://tathva.org/2011/index.php#!eventregister" target="_blank">Event Registration page</a> at Tathva site specifying the partners tathva ID to obtain a team ID.'));
 		terminal.print(' - Only teams with a valid Team ID are allowed to participate in the contest.');
 		terminal.print(' - When the first round is started the team captain should use his/her Google account to participate. The other team mate can help him/her, but need not attempt the first round individually.');
 	}},
