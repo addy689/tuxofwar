@@ -2,6 +2,7 @@
 
 import random
 import string
+import datetime
 from google.appengine.api import users
 from google.appengine.ext import db
 from google.appengine.api import users
@@ -19,7 +20,7 @@ class userPlay(db.Model):
 	questionSet = db.ListProperty(int)
 	tathvaID = db.StringProperty(required=True)
 	startTime = db.DateTimeProperty(required=True)
-	endTime = db.IntegerProperty
+	endTime = db.DateTimeProperty
 
 def userPlayExist():
 	query = userPlay.all()
@@ -29,28 +30,43 @@ def userPlayExist():
 	else:
 		return False
 
-def userPlayStart(tid,stime):
+def userPlayStart(tid):
 	if not userPlayExist():
 		u = userPlay(user = users.get_current_user(),
 					questionSet = generateSet(),
 					tathvaID = tid,
-					startTime = stime)
+					startTime = datetime.datetime.now())
 		u.put()
 		return u.user.nickname() + u.tathvaID
 	else:
 		print "Error. Contest already started."
 
-def userPlayStop(etime):
+def userPlayStop():
 	query = userPlay.all()
 	u = query.filter('user = ', users.get_current_user()).get()
-	if not u.endTime
-		u.endTime = etime
+	if not u.endTime:
+		u.endTime = datetime.datetime.now()
 		u.put()
 	return u.user.nickname() + u.tathvaID + str(u.endTime)
 
-class userAnswers(db.Model):
+def userElapsedTime():
+	query = userPlay.all()
+	u = query.filter('user = ', users.get_current_user()).get()
+	return ((datetime.datetime.now() - u.startTime).microseconds/1000)
+
+class userAnswer(db.Model):
 	user = user = db.UserProperty(required=True)
 	question = db.IntegerProperty(required=True)
 	answer = db.StringProperty(required=True)
 	elapsedTime = db.IntegerProperty(required=True)
+
+def userAnswerSubmit(ques,ans):
+	a = userAnswer(user = users.get_current_user(),
+					question = ques,
+					answer = ans,
+					elapsedTime = userElapsedTime())
+	a.put()
+	return str(ques) + ans + str(userElapsedTime())
+
+
 
