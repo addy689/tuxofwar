@@ -292,6 +292,29 @@ Filesystem = {
 		terminal.print(' Phone: +91 963 325 0636');
 		terminal.print(' Email: abhishek@tathva.org');
 	}},
+	'credits.txt': {type:'file', read:function(terminal) {
+		terminal.print($('<h3>').text('The people behind this'));
+		terminal.print('Jaseem Abid');
+		terminal.print($("Web : <a href='http://github.com/jaseemabid'> http://github.com/jaseemabid</a>"));
+		terminal.print('\n');
+		terminal.print('Vipin Nair');
+		terminal.print($("Web : <a href='http://github.com/swvist'> http://github.com/swvist</a>"));
+		terminal.print('\n');
+		terminal.print('Kartik Singhal');
+		terminal.print(' Phone: +91 974 688 7377');
+		terminal.print(' E-mail: kartik@tathva.org');
+		terminal.print('\n');
+		terminal.print('Abhishek Gupta');
+		terminal.print(' Phone: +91 963 325 0636');
+		terminal.print(' Email: abhishek@tathva.org');
+		terminal.print('\n');
+		terminal.print('Jerrin Shajee George');
+		terminal.print(' Phone: +91 9567 428 090');
+		terminal.print('\n');
+		terminal.print('Probal Mukherjee');
+		terminal.print(' Phone: +91 9020 703 783');
+		terminal.print(' Email: probal@tathva.org');
+	}},
 	'license.txt': {type:'file', read:function(terminal) {
 		terminal.print($('<p>').html('Client-side logic for Wordpress CLI theme :: <a href="http://thrind.xamai.ca/">R. McFarland, 2006, 2007, 2008</a>'));
 		terminal.print($('<p>').html('jQuery rewrite and overhaul :: <a href="http://www.chromakode.com/">Chromakode, 2010</a>'));
