@@ -150,7 +150,13 @@ TerminalShell.commands['answer'] = function(terminal) {
 	}
 };
 
-TerminalShell.commands['start'] = function(terminal, tatID) {
+// The start version before competion start
+
+TerminalShell.commands['start'] = function(terminal) {
+	terminal.print($('<p>').addClass('error').text('Not yet ! Please wait till 10:00 PM'));
+};
+
+/*TerminalShell.commands['start'] = function(terminal, tatID) {
 	if(!getUrlVars()['auth']) {
 		if (tatID === '' | typeof(tatID) === 'undefined' ) {
 			terminal.print($('<p>').addClass('error').text('Please enter a valid tathva team ID of the form TOW1234'));
@@ -164,7 +170,7 @@ TerminalShell.commands['start'] = function(terminal, tatID) {
 			terminal.print($('<p>').addClass('error').text('You have already started. You dont have to do it again'));
 	}
 
-};
+};*/
 
 TerminalShell.commands['sudo'] = function(terminal) {
 	var cmd_args = Array.prototype.slice.call(arguments);
