@@ -37,9 +37,10 @@ class contestQuestion(webapp.RequestHandler):
 			self.response.out.write(r)
 
 class contestAnswer(webapp.RequestHandler):
-	def get(self):
-		self.response.out.write(userdb.userAnswerSubmit(int(self.request.get('question')),
-								self.request.get('answer')))
+	if userdb.userPlayExist():
+		def get(self):
+			self.response.out.write(userdb.userAnswerSubmit(int(self.request.get('question')),
+									self.request.get('answer')))
 
 class adminQuestionsAdd(webapp.RequestHandler):
 	def get(self):
@@ -68,14 +69,24 @@ class adminQuestionsList(webapp.RequestHandler):
 		path = os.path.join(os.path.dirname(__file__), 'templates/questionlist.html')
 		self.response.out.write(template.render(path, template_values))
 
-class adminSubmittedAnswers(webapp.RequestHandler):
+class adminQuestionsAnswered(webapp.RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html'
 		query = userdb.userAnswer.all().order('elapsedTime')
 		result = query.fetch(100)
 		for ans in result:
-			self.response.out.write(ans.user.nickname() + str(ans.question) + ans.answer + str(ans.elapsedTime) + "<br />")
+			self.response.out.write(ans.user.nickname()+str(ans.question)+
+									ans.answer+str(ans.elapsedTime)+"<br />")
 
+class adminContestUsers(webapp.RequestHandler):
+	def get(self):
+		self.response.headers['Content-Type'] = 'text/html'
+		query = userdb.userPlay.all().order('startTime')
+		result = query.fetch(100)
+		for ans in result:
+			self.response.out.write(ans.user.nickname()+ans.tathvaID+"<br />")
+			self.response.out.write(ans.questionSet)
+			self.response.out.write("<br />")
 
 application = webapp.WSGIApplication(
 									[('/', index),
@@ -86,7 +97,8 @@ application = webapp.WSGIApplication(
 									('/admin/questions/add/', adminQuestionsAdd),
 									('/admin/questions/submit/', adminQuestionsSubmit),
 									('/admin/questions/list/',adminQuestionsList),
-									('/admin/submitted/answers/',adminSubmittedAnswers)],
+									('/admin/questions/answered/',adminQuestionsAnswered),
+									('/admin/contest/users/',adminContestUsers)],
 									debug=True)
 
 def main():
