@@ -42,3 +42,4 @@ div#credit a { font-size:xx-small; text-decoration:underline; }
 span#prompt {line-height:40px}
 p.question {line-height:40px; font-size:18px; margin:10px 20px;}
 ol.answers li {list-style: upper-alpha outside none; }
+div#timer { position:fixed; width: 300px; height:40px; border:1px solid white; top:30px; right: 200px;}
