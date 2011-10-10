@@ -151,12 +151,12 @@ TerminalShell.commands['answer'] = function(terminal) {
 };
 
 // The start version before competion start
-
+/*
 TerminalShell.commands['start'] = function(terminal) {
-	terminal.print($('<p>').addClass('error').text('Not yet ! Please wait till 10:00 PM'));
+	terminal.print($('<p>').addClass('error').text('Not yet ! Please wait till 10:00 PM '));
 };
-
-/*TerminalShell.commands['start'] = function(terminal, tatID) {
+*/
+TerminalShell.commands['start'] = function(terminal, tatID) {
 	if(!getUrlVars()['auth']) {
 		if (tatID === '' | typeof(tatID) === 'undefined' ) {
 			terminal.print($('<p>').addClass('error').text('Please enter a valid tathva team ID of the form TOW1234'));
@@ -170,7 +170,7 @@ TerminalShell.commands['start'] = function(terminal) {
 			terminal.print($('<p>').addClass('error').text('You have already started. You dont have to do it again'));
 	}
 
-};*/
+};
 
 TerminalShell.commands['sudo'] = function(terminal) {
 	var cmd_args = Array.prototype.slice.call(arguments);
@@ -241,11 +241,11 @@ function linkFile(url) {
 Filesystem = {
 	'welcome.txt': {type:'file', read:function(terminal) {
 		terminal.print($('<h3>').text('Welcome to Tux of War contest console'));
-		/*terminal.print('To navigate the questions, enter "next", "prev", "first", "last", "display", or "random".');*/
 		terminal.print('Use "ls", "cat", and "cd" to navigate the filesystem. Ctrl + L to clear.');
-		//terminal.print($('<h3>').text('Attention Linux afficionados!'));
-		//terminal.print('From basic GNU/Linux know-how to advanced shell scripting, it\'s all here.');
-		//terminal.print('So grab your thinking hats, and get ready to battle it out in Tux of War.');
+		terminal.print('cat reginfo.txt for registration information.');
+		terminal.print('The contest opens at 10pm tonight. You may login upto 10:30 pm to finish the contest in time.');
+		terminal.print('cat instruction.txt before participating');
+		terminal.print('use start <tathva TuxOfWar team id> to start the contest. e.g. start TOW1234');
 		terminal.print($('<h3>').text('Battle it out with Tux this Tathva!'));
 	}},
 	'datetime.txt': {type:'file', read:function(terminal) {
