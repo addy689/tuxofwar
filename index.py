@@ -22,7 +22,7 @@ class contestStart(webapp.RequestHandler):
 			self.redirect(users.create_login_url(self.request.uri))
 		else:
 			userdb.userPlayStart(var)
-			self.redirect('/')
+			self.redirect('/?auth=1')
 
 
 class contestStop(webapp.RequestHandler):
@@ -31,16 +31,14 @@ class contestStop(webapp.RequestHandler):
 		
 
 class contestQuestion(webapp.RequestHandler):
-	if userdb.userPlayExist():
-		def get(self,var):
-			user = users.get_current_user()
-			if user:
-				r = questiondb.getQuestion(int(userdb.userSetQuestion(int(var))))
-				self.response.out.write(r)
+	def get(self,var):
+		r = questiondb.getQuestion(int(userdb.userPermutation(int(var))))
+		self.response.out.write(r)
 
 class contestAnswer(webapp.RequestHandler):
 	def get(self):
-		self.response.out.write(userdb.userAnswerSubmit(userdb.userSetQuestion(int(self.request.get('question'))),
+		self.response.out.write(userdb.userAnswerSubmit(
+								int(userdb.userReversePermutation(int(self.request.get('question')))),
 								self.request.get('answer')))
 
 class adminQuestionsAdd(webapp.RequestHandler):
@@ -81,7 +79,7 @@ class adminQuestionsList(webapp.RequestHandler):
 			if users.is_current_user_admin():
 				self.response.headers['Content-Type'] = 'text/html'
 				query = questiondb.question.all()
-				result = query.fetch(5)
+				result = query.fetch(100)
 				template_values = { 'questions' : result }
 				path = os.path.join(os.path.dirname(__file__), 'templates/questionlist.html')
 				self.response.out.write(template.render(path, template_values))
@@ -95,6 +93,7 @@ class adminQuestionsAnswered(webapp.RequestHandler):
 		if users.get_current_user():
 			if users.is_current_user_admin():
 				self.response.headers['Content-Type'] = 'text/html'
+				self.response.out.write("Answered Questions<br />")
 				query = userdb.userAnswer.all().order('elapsedTime')
 				result = query.fetch(100)
 				for ans in result:
@@ -109,14 +108,13 @@ class adminContestUsers(webapp.RequestHandler):
 	def get(self):
 		if users.get_current_user():
 			if users.is_current_user_admin():
-				def get(self):
-					self.response.headers['Content-Type'] = 'text/html'
-					query = userdb.userPlay.all().order('startTime')
-					result = query.fetch(100)
-					for ans in result:
-						self.response.out.write(ans.user.nickname()+ans.tathvaID+"<br />")
-						self.response.out.write(ans.questionSet)
-						self.response.out.write("<br />")
+				self.response.headers['Content-Type'] = 'text/html'
+				query = userdb.userPlay.all().order('startTime')
+				result = query.fetch(100)
+				for ans in result:
+					self.response.out.write(ans.user.nickname()+ans.tathvaID+"<br />")
+					self.response.out.write(ans.questionSet)
+					self.response.out.write("<br />")
 			else:
 					print "Not allowed!"
 		else:
