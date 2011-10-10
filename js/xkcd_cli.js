@@ -313,23 +313,23 @@ Filesystem = {
 	terminal.print('There will be total of 45 questions, answer as many as you can.');
 	terminal.print('Marking scheme: +4 for correct, -1 for incorrect answer.');
 	terminal.print('Decision of co-ordinators will be final.');
-	terminal.print($('<br />');
+	terminal.print($('<br />'));
 	terminal.print($('<h3>').text('How to compete:'));
 	terminal.print('Do not reload or logout once you start the competition. ');
 	terminal.print('Use the following command to use the contest console:');
 	terminal.print('start <tathva team id>');
 	terminal.print('e.g. start TOW1001');
-	terminal.print($('<br />');
+	terminal.print($('<br />'));
 	terminal.print('Once the contest starts to view any question type the command:');
 	terminal.print('display <ques_no> OR question <ques_no> ');
 	terminal.print('e.g. for question no. 5 type command `question 5`');
 	terminal.print('question number must be between 1 and 45');
-	terminal.print($('<br />');
+	terminal.print($('<br />'));
 	terminal.print('To answer any question type :');
 	terminal.print('answer -q <ques_no> -a <ans_option>');
 	terminal.print('e.g. To answer question number 5 with option B type ');
 	terminal.print('answer -q 5 -a B');
-	terminal.print($('<br />');
+	terminal.print($('<br />'));
 	terminal.print('use next prev to switch between questions');
 	terminal.print('and random to go to random question ;-)');
 	}},
