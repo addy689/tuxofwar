@@ -16,7 +16,7 @@ def getQuestion(num):
 	q = query.filter('questionNumber =',num).get()
 	if q:
 		return ("{"+
-				"\"num\" : " + "\"" + q.questionNumber + "\"" +","+
+				"\"num\" : " + "\""+str(q.questionNumber)+"\""+","+
 				"\"question\" : "+"\""+q.question.replace('\n','<br />')+"\""+","+
 				"\"image\" : "+"\""+q.qimage+"\""+","+ 
 				"\"options\" : " + "["+
