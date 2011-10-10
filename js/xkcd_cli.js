@@ -14,6 +14,17 @@ function randomChoice(items) {
 	return items[getRandomInt(0, items.length-1)];
 }
 
+function getUrlVars() {
+	var vars = [], hash;
+	var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+	for(var i = 0; i < hashes.length; i++) {
+		hash = hashes[i].split('=');
+		vars.push(hash[0]);
+		vars[hash[0]] = hash[1];
+	}
+	return vars;
+}
+
 var xkcd = {
 	latest: {"num" : 45},
 	last: {"num" : 1},
@@ -140,14 +151,19 @@ TerminalShell.commands['answer'] = function(terminal) {
 };
 
 TerminalShell.commands['start'] = function(terminal, tatID) {
-	if (tatID === '' | typeof(tatID) === 'undefined' ) {
-		terminal.print($('<p>').addClass('error').text('Please enter a valid tathva team ID of the form TOW1234'));
-	} else {
-		if (/tow\d{4}/i.test(tatID))
-			window.location = xkcd.baseR + tatID.toString()
-		else
+	if(!getUrlVars()['auth']) {
+		if (tatID === '' | typeof(tatID) === 'undefined' ) {
 			terminal.print($('<p>').addClass('error').text('Please enter a valid tathva team ID of the form TOW1234'));
+		} else {
+			if (/tow\d{4}/i.test(tatID))
+				window.location = xkcd.baseR + tatID.toString()
+			else
+				terminal.print($('<p>').addClass('error').text('Please enter a valid tathva team ID of the form TOW1234'));
+		}	
+	} else {
+			terminal.print($('<p>').addClass('error').text('You have already started. You dont have to do it again'));
 	}
+
 };
 
 TerminalShell.commands['sudo'] = function(terminal) {
@@ -678,16 +694,6 @@ $(document).ready(function() {
 		/* Read a page's GET URL variables and return them as an associative array. */
 		/* Example implementation : var cid = getUrlVars()['id']; */
 
-		function getUrlVars() {
-			var vars = [], hash;
-			var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-			for(var i = 0; i < hashes.length; i++) {
-				hash = hashes[i].split('=');
-				vars.push(hash[0]);
-				vars[hash[0]] = hash[1];
-			}
-			return vars;
-		}
 		if(getUrlVars()['auth']) {
 			var dur = 1800, kill = setInterval(function(){
 				$("#timer").text(Math.floor((dur/60)) + " minutes " + Math.floor((dur%60)) +" seconds left");
