@@ -14,7 +14,6 @@ def generateSet():
 	random.shuffle(a)
 	return a
 
-
 class userPlay(db.Model):
 	user = db.UserProperty(required=True)
 	questionSet = db.ListProperty(int)
@@ -25,10 +24,10 @@ class userPlay(db.Model):
 def userPlayExist():
 	query = userPlay.all()
 	u = query.filter('user = ', users.get_current_user()).get()
-	if u:
-		return True
-	else:
+	if not u:
 		return False
+	else:
+		return True
 
 def userPlayStart(tid):
 	if not userPlayExist():
@@ -53,6 +52,11 @@ def userElapsedTime():
 	query = userPlay.all()
 	u = query.filter('user = ', users.get_current_user()).get()
 	return ((datetime.datetime.now() - u.startTime).microseconds/1000)
+
+def userSetQuestion(num):
+	query = userPlay.all()
+	u = query.filter('user = ', users.get_current_user()).get()
+	return u.questionSet[num-1]
 
 class userAnswer(db.Model):
 	user = user = db.UserProperty(required=True)
