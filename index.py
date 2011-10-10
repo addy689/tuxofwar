@@ -106,20 +106,21 @@ class adminQuestionsAnswered(webapp.RequestHandler):
 			self.redirect(users.create_login_url(self.request.uri))
 
 class adminContestUsers(webapp.RequestHandler):
-	if users.get_current_user():
-		if users.is_current_user_admin():
-			def get(self):
-				self.response.headers['Content-Type'] = 'text/html'
-				query = userdb.userPlay.all().order('startTime')
-				result = query.fetch(100)
-				for ans in result:
-					self.response.out.write(ans.user.nickname()+ans.tathvaID+"<br />")
-					self.response.out.write(ans.questionSet)
-					self.response.out.write("<br />")
+	def get(self):
+		if users.get_current_user():
+			if users.is_current_user_admin():
+				def get(self):
+					self.response.headers['Content-Type'] = 'text/html'
+					query = userdb.userPlay.all().order('startTime')
+					result = query.fetch(100)
+					for ans in result:
+						self.response.out.write(ans.user.nickname()+ans.tathvaID+"<br />")
+						self.response.out.write(ans.questionSet)
+						self.response.out.write("<br />")
+			else:
+					print "Not allowed!"
 		else:
-				print "Not allowed!"
-	else:
-		self.redirect(users.create_login_url(self.request.uri))
+			self.redirect(users.create_login_url(self.request.uri))
 
 application = webapp.WSGIApplication(
 									[('/', index),
