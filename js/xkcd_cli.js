@@ -49,7 +49,7 @@ var xkcd = {
 	}
 };
 
-var xkcdDisplay = TerminalShell.commands['display'] = function(terminal, path) {
+var xkcdDisplay = TerminalShell.commands['question'] = TerminalShell.commands['display'] = function(terminal, path) {
 
 console.log("last prev : " + xkcd.last.num);
 
