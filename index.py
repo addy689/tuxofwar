@@ -32,6 +32,7 @@ class contestStart(webapp.RequestHandler):
 class contestStop(webapp.RequestHandler):
 	def get(self):
 		self.response.out.write(userdb.userPlayStop())
+		self.redirect('/?end=1')
 		
 
 class contestQuestion(webapp.RequestHandler):
