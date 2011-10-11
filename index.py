@@ -32,12 +32,13 @@ class contestStart(webapp.RequestHandler):
 class contestStop(webapp.RequestHandler):
 	def get(self):
 		self.response.out.write(userdb.userPlayStop())
+		self.redirect('/?end=1')
 		
 
 class contestQuestion(webapp.RequestHandler):
 	def get(self,var):
 		self.response.headers['Content-Type'] = 'application/json'
-		r = questiondb.getQuestion(int(userdb.userPermutation(int(var))))
+		r = questiondb.getQuestion(int(userdb.userPermutation(int(var))),int(var))
 		self.response.out.write(r)
 
 class contestAnswer(webapp.RequestHandler):

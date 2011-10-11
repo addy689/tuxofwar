@@ -11,12 +11,12 @@ class question(db.Model):
 	opt4 = db.StringProperty(required=True, multiline=True)
 	ans = db.StringProperty(required=True)
 
-def getQuestion(num):
+def getQuestion(num,var):
 	query = question.all()
 	q = query.filter('questionNumber =',num).get()
 	if q:
 		return ("{"+
-				"\"num\" : " + "\""+str(num)+"\""+","+
+				"\"num\" : " + "\""+str(var)+"\""+","+
 				"\"question\" : "+"\""+q.question.replace('\r\n','<br />')+"\""+","+
 				"\"image\" : "+"\""+q.qimage+"\""+","+ 
 				"\"options\" : " + "["+
