@@ -59,7 +59,7 @@ var xkcd = {
 	}
 };
 
-var xkcdDisplay = TerminalShell.commands['question'] = TerminalShell.commands['display'] = function(terminal, path) {
+var xkcdDisplay = TerminalShell.commands['q'] = TerminalShell.commands['question'] = TerminalShell.commands['display'] = function(terminal, path) {
 
 console.log("last prev : " + xkcd.last.num);
 
@@ -81,7 +81,8 @@ console.log("last prev : " + xkcd.last.num);
 	xkcd.get(path, function(data) {
 		// Stuff to be dome with question data
 		terminal.setWorking(true);
-		terminal.print($('<p>').addClass('question').text(data.question));
+		terminal.print($('<h3>').text('Question ' + data.num));
+		terminal.print($('<p class=question>' + data.question + '</p>'));
 		if(data.image)
 			terminal.print($('<img>').addClass('comic').attr('src', data.image));
 		terminal.print($('<ol class="answers"><li>'+ data.options[0] +'</li><li>' +data.options[1] + '</li><li>'+ data.options[2]+'</li><li>'+data.options[3]+'</li></ol>'));
