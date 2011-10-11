@@ -91,6 +91,7 @@ var xkcdDisplay = TerminalShell.commands['q'] = TerminalShell.commands['question
 	//console.log("last now : " + xkcd.last.num);
 }
 
+/*
 TerminalShell.commands['next'] = function(terminal) {
 	xkcdDisplay(terminal, xkcd.last.num+1);
 };
@@ -100,10 +101,6 @@ TerminalShell.commands['prev'] = function(terminal) {
 	xkcdDisplay(terminal, xkcd.last.num-1);
 };
 
-TerminalShell.commands['first'] = function(terminal) {
-	xkcdDisplay(terminal, 1);
-};
-
 TerminalShell.commands['latest'] =
 TerminalShell.commands['last'] = function(terminal) {
 	xkcdDisplay(terminal, xkcd.latest.num);
@@ -111,6 +108,11 @@ TerminalShell.commands['last'] = function(terminal) {
 
 TerminalShell.commands['random'] = function(terminal) {
 	xkcdDisplay(terminal, getRandomInt(1, xkcd.latest.num));
+};
+*/
+
+TerminalShell.commands['first'] = function(terminal) {
+	xkcdDisplay(terminal, 1);
 };
 
 TerminalShell.commands['answer'] = function(terminal) {
@@ -163,7 +165,6 @@ TerminalShell.commands['start'] = function(terminal, tatID) {
 	} else {
 			terminal.print($('<p>').addClass('error').text('You have already started. You dont have to do it again'));
 	}
-
 };
 
 TerminalShell.commands['sudo'] = function(terminal) {
@@ -696,30 +697,34 @@ TerminalShell.fallback = function(terminal, cmd) {
 		'lpr': 'PC LOAD LETTER',
 		'hello joshua': 'How about a nice game of Global Thermonuclear War?',
 		'xyzzy': 'Nothing happens.',
-		'date': 'March 32nd',
+		'date': 'March 22nd 1992',
 		'hello': 'Why hello there!',
 		'who': 'Doctor Who?',
 		'tathva': 'Yes! What can we do for you ?',
 		'su': 'God mode activated. Remember, with great power comes great ... aw, screw it, go have fun.',
 		'fuck': 'I have a headache.',
+		'hack':$('<h1>').addClass('error').text('You really thought its that simple ? '),
 		'whoami': 'You are tux maniac.',
-		'nano': 'Seriously? Why don\'t you just use Notepad.exe? Or MS Paint?',
+		'nano': 'Seriously? Why don\'t you just use gedit or emacs',
 		'top': 'It\'s up there --^',
 		'moo':'moo',
 		'ping': 'There is another submarine three miles ahead, bearing 225, forty fathoms down.',
 		'find': 'What do you want to find? Kitten would be nice.',
-		'hello':'Hello.','more':'Oh, yes! More! More!',
+		'more':'Oh, yes! More! More!',
 		'your gay': 'Keep your hands off it!',
-		'hi':'Hi.','echo': 'Echo ... echo ... echo ...',
+		'hi':'Hi.',
+		'echo': 'Echo ... echo ... echo ...',
 		'bash': 'You bash your head against the wall. It\'s not very effective.','ssh': 'ssh, this is a library.',
 		'uname': 'Illudium Q-36 Explosive Space Modulator',
 		'finger': 'Mmmmmm...',
 		'kill': 'Terminator deployed to 1984.',
+		'pkill' : 'Please dont say you wanna shutdown appspot',
 		'use the force luke': 'I believe you mean source.',
 		'use the source luke': 'I\'m not luke, you\'re luke!',
 		'serenity': 'You can\'t take the sky from me.',
 		'enable time travel': 'TARDIS error: Time Lord missing.',
-		'ed': 'You are not a diety.'
+		'ed': 'You are not a diety.',
+		'source': 'How dump ! press crtl + u'
 	};
 	oneliners['emacs'] = 'You should really use vim.';
 	oneliners['vi'] = oneliners['vim'] = 'You should really use emacs.';
