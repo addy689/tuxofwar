@@ -46,6 +46,16 @@ class contestAnswer(webapp.RequestHandler):
 								int(userdb.userPermutation(int(self.request.get('question')))),
 								self.request.get('answer')))
 
+class contestActiveuser(webapp.RequestHandler):
+	def get(self):
+		self.response.headers['Content-Type'] = 'application/json'
+		user = users.get_current_user()
+		if user:
+			self.response.out.write("{ \"name\" : \""+user.nickname()+"\" }")
+		else:
+			self.response.out.write("{ \"name\" : \"NULL\" }")
+			
+
 class adminQuestionsAdd(webapp.RequestHandler):
 	def get(self):
 		if users.get_current_user():
@@ -131,6 +141,7 @@ application = webapp.WSGIApplication(
 									('/contest/stop/',contestStop),
 									('/contest/question/(\d*)|/', contestQuestion),
 									('/contest/answer/', contestAnswer),
+									('/contest/activeuser/', contestActiveuser),
 									('/admin/questions/add/', adminQuestionsAdd),
 									('/admin/questions/submit/', adminQuestionsSubmit),
 									('/admin/questions/list/',adminQuestionsList),
