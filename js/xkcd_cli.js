@@ -42,20 +42,17 @@ var xkcd = {
 			error(false);
 			return false;
 		}
-		
-		if (num in this.cache) {
-			this.last = this.cache[num];
-			success(this.cache[num]);
-		} else {
-			return $.ajax({
-				url: this.baseQ+path,
-				dataType: 'json',
-				success: $.proxy(function(data) {
-					this.last = this.cache[num] = data;
-					success(data);
-				}, this),
-				error: error});
-		}
+
+		return $.ajax({
+			url: this.baseQ+path,
+			dataType: 'json',
+			success: $.proxy(function(data) {
+				this.last = data;
+				success(data);
+			}, this),
+			error: error
+		});
+
 	}
 };
 
