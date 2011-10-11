@@ -26,7 +26,7 @@ class contestStart(webapp.RequestHandler):
 				self.redirect('/?auth=1')
 			else:
 				self.response.headers['Content-Type'] = 'text/html'
-				self.response.out.write("You were not supposed to do this! <a href='/'>Retry Here</a>")
+				self.response.out.write("You have already started the contest. You were not supposed to do this. You can continue the contest <a href='/'>here</a>. You will not have a timer and you may be penalized for this. Contact admins for further details." )
 
 
 class contestStop(webapp.RequestHandler):
