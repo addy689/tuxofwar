@@ -60,9 +60,7 @@ var xkcd = {
 };
 
 var xkcdDisplay = TerminalShell.commands['q'] = TerminalShell.commands['question'] = TerminalShell.commands['display'] = function(terminal, path) {
-
-console.log("last prev : " + xkcd.last.num);
-
+	console.log("last prev : " + xkcd.last.num);
 	function fail() {
 		terminal.print($('<p>').addClass('error').text('display: Unable to show you the question.'));
 		terminal.setWorking(false);
@@ -90,8 +88,7 @@ console.log("last prev : " + xkcd.last.num);
 			terminal.setWorking(false);
 		},1000);
 	}, fail);
-
-console.log("last now : " + xkcd.last.num);
+	console.log("last now : " + xkcd.last.num);
 }
 
 TerminalShell.commands['next'] = function(terminal) {
@@ -120,28 +117,26 @@ TerminalShell.commands['answer'] = function(terminal) {
 	// answer  (-a|-A|--answer) [A-D] ( (-q|-Q|--question) \d ) ?
 	var cmd_args = Array.prototype.slice.call(arguments);
 	cmd_args.shift(); // terminal
-	console.log(cmd_args);
 	var submit = { "question" : -1, "answer" : -1 };
 	for( q=0; q < cmd_args.length; q += 1 ) {
-		if ( cmd_args[q] === '--question' | cmd_args[q] === '-q' | cmd_args[q] === '-Q')
+		if ( cmd_args[q] === '--question' | cmd_args[q] === '-q' | cmd_args[q] === '-Q') {
+			if ( cmd_args[q+1] )
 			submit.question = Number(cmd_args[q+1]);
-		if ( cmd_args[q] === '--answer' | cmd_args[q] === '-a' | cmd_args[q] === '-A')
-			submit.answer = cmd_args[q+1].toString().toUpperCase();
+		}
+		if ( cmd_args[q] === '--answer' | cmd_args[q] === '-a' | cmd_args[q] === '-A') {
+			if ( cmd_args[q+1] )
+				submit.answer = cmd_args[q+1].toString().toUpperCase();
+		}
 	}
 
-	if ( submit.question === -1 ) {
-		if (typeof(xkcd.last.num) === 'undefined') {
-			submit.question = -1;
-		} else
-			submit.question = xkcd.last.num;
-	}
-
-	if ( submit.answer === -1 )
-		terminal.print($('<p>').addClass('error').text('Enter an answer'));
-	else if ( submit.answer < 'A' || submit.answer > 'D' )
-		terminal.print($('<p>').addClass('error').text('Answer must a an option between A and D '));
+	if ( submit.question === -1 )
+		terminal.print($('<p>').addClass('error').text('Specify-q option to answer. Read instructions.txt for clarifications'));
 	else if ( submit.question > xkcd.latest.num || submit.question < 0 )
 		terminal.print($('<p>').addClass('error').text('Answer a question b/w 0 and ' + xkcd.latest.num ));
+	if ( submit.answer === -1 )
+		terminal.print($('<p>').addClass('error').text('Specify-a option to answer. Read instructions.txt for clarifications'));
+	else if ( submit.answer < 'A' || submit.answer > 'D' )
+		terminal.print($('<p>').addClass('error').text('Answer must a an option between A and D '));
 	else {
 		terminal.print($('<p>').addClass('question').text('You answered question ' + submit.question +' with option ' + submit.answer ));
 		// Answer submissions if no errors found
