@@ -37,7 +37,7 @@ class contestStop(webapp.RequestHandler):
 class contestQuestion(webapp.RequestHandler):
 	def get(self,var):
 		self.response.headers['Content-Type'] = 'application/json'
-		r = questiondb.getQuestion(int(userdb.userPermutation(int(var))))
+		r = questiondb.getQuestion(int(userdb.userPermutation(int(var))),int(var))
 		self.response.out.write(r)
 
 class contestAnswer(webapp.RequestHandler):
