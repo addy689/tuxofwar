@@ -11,13 +11,12 @@ function getRandomInt(min, max) {
 }
 
 function randomChoice(items) {
-	return items[getRandomInt(0, items.length-1)];
+	return items[getRandomInt(0, items.length - 1)];
 }
 
 function getUrlVars() {
-	var vars = [], hash;
-	var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-	for(var i = 0; i < hashes.length; i++) {
+	var i, vars = [], hash, hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+	for (i = 0; i < hashes.length; i = i + 1) {
 		hash = hashes[i].split('=');
 		vars.push(hash[0]);
 		vars[hash[0]] = hash[1];
@@ -131,7 +130,6 @@ TerminalShell.commands['answer'] = function(terminal) {
 
 	if ( submit.question === -1 ) {
 		if (typeof(xkcd.last.num) === 'undefined') {
-			console.log("undefined");
 			submit.question = -1;
 		} else
 			submit.question = xkcd.last.num;
@@ -238,158 +236,186 @@ function linkFile(url) {
 	}};
 }
 
-Filesystem = {
-	'welcome.txt': {type:'file', read:function(terminal) {
-		terminal.print($('<h3>').text('Welcome to Tux of War contest console'));
-		terminal.print('Use "ls", "cat", and "cd" to navigate the filesystem. Ctrl + L to clear.');
-		terminal.print('cat reginfo.txt for registration information.');
-		terminal.print('The contest opens at 10pm tonight. You may login upto 10:30 pm to finish the contest in time.');
-		terminal.print('cat instruction.txt before participating');
-		terminal.print('use start <tathva TuxOfWar team id> to start the contest. e.g. start TOW1234');
-		terminal.print($('<h3>').text('The contest will start soon, you will be notified here. Please be patient.'));
+var Filesystem = {
+	'welcome.txt': {type: 'file', read: function (terminal) {
+		'use strict';
+		$.each([
+			$('<h3>').text('Welcome to Tux of War contest console'),
+			'Use "ls", "cat", and "cd" to navigate the filesystem.Press "Ctrl" then "L" to clear.',
+			'cat reginfo.txt for registration information.',
+			'The contest opens at 10pm tonight. You may login upto 10:30 pm to finish the contest in time.',
+			'cat instruction.txt before participating',
+			'use start <tathva TuxOfWar team id> to start the contest. e.g. start TOW1234',
+			$('<h3>').text('The contest will start soon, you will be notified here. Please be patient.')
+		], function (num, line) {
+			terminal.print(line);
+		});
 	}},
-	'datetime.txt': {type:'file', read:function(terminal) {
-		terminal.print($('<h3>').text('Date and Time'));
-		terminal.print('Monday October 10, 2011.');
-		terminal.print('10pm to 11pm.');
+	'datetime.txt': {type: 'file', read: function (terminal) {
+		'use strict';
+		$.each([
+			$('<h3>').text('Date and Time : Monday October 11, 2011 10pm to 11pm.')
+		], function (num, line) {
+			terminal.print(line);
+		});
 	}},
-	'prizes.txt': {type:'file', read:function(terminal) {
-		terminal.print($('<h3>').text('The best Tux Warriors will be awarded with prizes'));
-		terminal.print('First  Rs. 3500/-');
-		terminal.print('Second Rs. 2000/-');
-		terminal.print('Third  Rs. 1500/-');
+	'prizes.txt': {type: 'file', read: function (terminal) {
+		'use strict';
+		$.each([
+			$('<h3>').text('The best Tux Warriors will be awarded with prizes'),
+			'First  Rs. 3500/-',
+			'Second Rs. 2000/-',
+			'Third  Rs. 1500/-'
+		], function (num, line) {
+			terminal.print(line);
+		});
 	}},
-	'rules.txt': {type:'file', read:function(terminal) {
-		terminal.print($('<h3>').text('Contest Rules'));
-		terminal.print(' - Maximum two participants per team.');
-		terminal.print(' - Any number of teams are allowed from a college. However the members of a team must be from the same college.');
-		terminal.print(' - There will be a maximum of three rounds.');
-		terminal.print(' - The first round will be an online qualifying round from which a maximum of 10 teams will be shortlisted.');
-		terminal.print(' - The final 2 rounds will be conducted at NITC campus during Tathva. Consisting of a debugging/sysadmin round (including, but not limited to, common linux hassles/problems, system environment editing, etc.) and a bash scripting round, these will test the participant\'s practical skills in a Linux environment.');
-		terminal.print(' - Marks from first round will not be carried over to the other two rounds.');
-		terminal.print(' - However marks from Round 2 will be carried over to Round 3 i.e. winning teams will be decided on the basis of performance in the last two rounds.');
-		terminal.print(' - The co-ordinator\'s decision shall be final.');
+	'rules.txt': {type: 'file', read: function (terminal) {
+		'use strict';
+		$.each([
+			$('<h3>').text('Contest Rules'),
+			'Maximum two participants per team.',
+			'Any number of teams are allowed from a college. However the members of a team must be from the same college.',
+			'There will be a maximum of three rounds.',
+			'The first round will be an online qualifying round from which a maximum of 10 teams will be shortlisted.',
+			'The final 2 rounds will be conducted at NITC campus during Tathva. Consisting of a debugging/sysadmin round (including, but not limited to, common linux hassles/problems, system environment editing, etc.) and a bash scripting round, these will test the participant\'s practical skills in a Linux environment.',
+			'Marks from first round will not be carried over to the other two rounds.',
+			'However marks from Round 2 will be carried over to Round 3 i.e. winning teams will be decided on the basis of performance in the last two rounds.',
+			'The co-ordinator\'s decision shall be final.'
+		], function (num, line) {
+			terminal.print(line);
+		});
 	}},
-	'contestdetails.txt': {type:'file', read:function(terminal) {
-		terminal.print($('<h3>').text('Contest Details'));
-		terminal.print($('<h4>').text('Round 1 - Preliminary'));
-		terminal.print(' - This will be an online round.');
-		terminal.print(' - Questions will consist of MCQs and one-liners based on UNIX/Linux commands, tools, concepts and philosophy.');
-		terminal.print(' - Duration will be 30 minutes.');
-		terminal.print(' - This will be an elimination round and only the qualifying teams will appear for next 2 rounds.');
-		terminal.print($('<h4>').text('Round 2 - Sysadmin Round'));
-		terminal.print(' - This will be an onsite round during Tathva');
-		terminal.print(' - Involving practical linux hassles/problems on Debian/Redhat based systems');
-		terminal.print(' - One system per team');
-		terminal.print(' - Duration will be 90 minutes');
-		terminal.print(' - Marks will be given for documentation too');
-		terminal.print(' - Boot CD/USB will be available on request');
-		terminal.print(' - No Internet access');
-		terminal.print($('<h4>').text('Round 3 - Scripting Round'));
-		terminal.print(' - This will also be an onsite round during Tathva');
-		terminal.print(' - Involving writing bash scripts for general shell usage, administration related tasks, networking, etc.');
-		terminal.print(' - One system per team');
-		terminal.print(' - Duration 3 hours');
-		terminal.print(' - Marks for elegance, covering more input cases, optimization');
-		terminal.print($('<p>').html('Final winners will be decided on the basis of performance in last two rounds.'));
+	'contestdetails.txt': {type: 'file', read: function (terminal) {
+		'use strict';
+		$.each([
+			$('<h3>').text('Contest Details'),
+			$('<h4>').text('Round 1 - Preliminary'),
+			'This will be an online round.',
+			'Questions will consist of MCQs and one-liners based on UNIX/Linux commands, tools, concepts and philosophy.',
+			'Duration will be 30 minutes.',
+			'This will be an elimination round and only the qualifying teams will appear for next 2 rounds.',
+			$('<h4>').text('Round 2 - Sysadmin Round'),
+			'This will be an onsite round during Tathva',
+			'Involving practical linux hassles/problems on Debian/Redhat based systems',
+			'One system per team',
+			'Duration will be 90 minutes',
+			'Marks will be given for documentation too',
+			'Boot CD/USB will be available on request',
+			'No Internet access',
+			$('<h4>').text('Round 3 - Scripting Round'),
+			'This will also be an onsite round during Tathva',
+			'Involving writing bash scripts for general shell usage, administration related tasks, networking, etc.',
+			'One system per team',
+			'Duration 3 hours',
+			'Marks for elegance, covering more input cases, optimization',
+			$('<p>').html('Final winners will be decided on the basis of performance in last two rounds.')
+		], function (num, line) {
+			terminal.print(line);
+		});
 	}},
-	'reginfo.txt': {type:'file', read:function(terminal) {
-		terminal.print($('<h3>').text('Registration Info'));
-		terminal.print($('<p>').html(' - Both members of the team have to <a href="http://tathva.org/2011/#!register" target="_blank">register on the Tathva Site</a> to receive individual Tathva IDs. The team captain should use a Google account for registration, this will be required for logging into the contest portal.'));
-		terminal.print($('<p>').html(' - Then, the team captain has to register for Tux of War using <a href="http://tathva.org/2011/index.php#!eventregister" target="_blank">Event Registration page</a> at Tathva site specifying the partners tathva ID to obtain a team ID.'));
-		terminal.print(' - Only teams with a valid Team ID are allowed to participate in the contest.');
-		terminal.print(' - When the first round is started the team captain should use his/her Google account to participate. The other team mate can help him/her, but need not attempt the first round individually.');
+	'reginfo.txt': {type: 'file', read: function (terminal) {
+		'use strict';
+		$.each([
+			$('<h3>').text('Registration Info'),
+			$('<p>').html('Both members of the team have to <a href="http://tathva.org/2011/#!register" target="_blank">register on the Tathva Site</a> to receive individual Tathva IDs. The team captain should use a Google account for registration, this will be required for logging into the contest portal.'),
+			$('<p>').html('Then, the team captain has to register for Tux of War using <a href="http://tathva.org/2011/index.php#!eventregister" target="_blank">Event Registration page</a> at Tathva site specifying the partners tathva ID to obtain a team ID.'),
+			'Only teams with a valid Team ID are allowed to participate in the contest.',
+			'When the first round is started the team captain should use his/her Google account to participate. The other team mate can help him/her, but need not attempt the first round individually.'
+		], function (num, line) {
+			terminal.print(line);
+		});
 	}},
-	/*'resources.txt': {type:'file', read:function(terminal) {
-		terminal.print($('<h3>').text('Resources.'));
-		terminal.print('Links to various tutorials, pages, etc.');
-		terminal.print('philosophy - FSF');
-		terminal.print('scripting - tldp.org absg');
-		terminal.print('some linux tutorials');
-	}},*/
-	'instructions.txt': {type:'file', read:function(terminal) {
-		terminal.print($('<h3>').text('Tux of War contest Instructions'));
-		terminal.print('You will get 30 minutes for attempting the questions.');
-		terminal.print('There will be total of 45 questions, answer as many as you can.');
-		terminal.print('Marking scheme: +4 for correct, -1 for incorrect answer.');
-		terminal.print('Decision of co-ordinators will be final.');
-		terminal.print($('<br />'));
-		terminal.print($('<h3>').text('How to compete:'));
-		terminal.print('Do not reload or logout once you start the competition. ');
-		terminal.print('Use the following command to use the contest console:');
-		terminal.print('start <tathva team id>');
-		terminal.print('e.g. start TOW1001');
-		terminal.print($('<br />'));
-		terminal.print('Once the contest starts to view any question type the command:');
-		terminal.print('display <ques_no> OR question <ques_no> ');
-		terminal.print('e.g. for question no. 5 type command `question 5`');
-		terminal.print('question number must be between 1 and 45');
-		terminal.print($('<br />'));
-		terminal.print('To answer any question type :');
-		terminal.print('answer -q <ques_no> -a <ans_option>');
-		terminal.print('e.g. To answer question number 5 with option B type ');
-		terminal.print('answer -q 5 -a B');
-		terminal.print($('<br />'));
-		terminal.print('use next prev to switch between questions');
-		terminal.print('and random to go to random question ;-)');
+	'instructions.txt': {type: 'file', read: function (terminal) {
+		'use strict';
+		$.each([
+			$('<h3>').text('Tux of War contest Instructions'),
+			'You will get 30 minutes for attempting the questions.',
+			'There will be total of 45 questions, answer as many as you can.',
+			'Marking scheme: +4 for correct, -1 for incorrect answer.',
+			'Decision of co-ordinators will be final.',
+			$('<br />'),
+			$('<h3>').text('How to compete:'),
+			'Do not reload or logout once you start the competition',
+			'Use the following command to use the contest console:',
+			'start <tathva team id>',
+			'e.g. start TOW1001',
+			$('<br />'),
+			'Once the contest starts to view any question type the command:',
+			'display <ques_no> OR question <ques_no> ',
+			'e.g. for question no. 5 type command question 5',
+			'question number must be between 1 and 45',
+			$('<br />'),
+			'To answer any question type :',
+			'answer -q <ques_no> -a <ans_option>',
+			'e.g. To answer question number 5 with option B type ',
+			'answer -q 5 -a B',
+			$('<br />'),
+			'use next prev and random to switch between questions'
+		], function (num, line) {
+			terminal.print(line);
+		});
 	}},
-	'contacts.txt': {type:'file', read:function(terminal) {
-		terminal.print($('<h3>').text('Contact Info'));
-		terminal.print('Kartik Singhal');
-		terminal.print(' Phone: +91 974 688 7377');
-		terminal.print(' E-mail: kartik@tathva.org');
-		terminal.print('\n');
-		terminal.print('Abhishek Gupta');
-		terminal.print(' Phone: +91 963 325 0636');
-		terminal.print(' Email: abhishek@tathva.org');
+	'contacts.txt': {type: 'file', read: function (terminal) {
+		'use strict';
+		$.each([
+			$('<h3>').text('Contact Info'),
+			'Kartik Singhal',
+			' Phone: +91 974 688 7377',
+			' E-mail: kartik@tathva.org',
+			'Abhishek Gupta',
+			' Phone: +91 963 325 0636',
+			' Email: abhishek@tathva.org'
+		], function (num, line) {
+			terminal.print(line);
+		});
 	}},
-	'credits.txt': {type:'file', read:function(terminal) {
-		terminal.print($('<h3>').text('The people behind this'));
-		terminal.print('Jaseem Abid');
-		terminal.print($("Web : <a href='http://github.com/jaseemabid'> http://github.com/jaseemabid</a>"));
-		terminal.print('\n');
-		terminal.print('Vipin Nair');
-		terminal.print($("Web : <a href='http://github.com/swvist'> http://github.com/swvist</a>"));
-		terminal.print('\n');
-		terminal.print('Kartik Singhal');
-		terminal.print(' Phone: +91 974 688 7377');
-		terminal.print(' E-mail: kartik@tathva.org');
-		terminal.print('\n');
-		terminal.print('Abhishek Gupta');
-		terminal.print(' Phone: +91 963 325 0636');
-		terminal.print(' Email: abhishek@tathva.org');
-		terminal.print('\n');
-		terminal.print('Jerrin Shajee George');
-		terminal.print(' Phone: +91 9567 428 090');
-		terminal.print('\n');
-		terminal.print('Probal Mukherjee');
-		terminal.print(' Phone: +91 9020 703 783');
-		terminal.print(' Email: probal@tathva.org');
+	'credits.txt': {type: 'file', read: function (terminal) {
+		'use strict';
+		$.each([
+			$('<h3>').text('The people behind this'),
+			'Jaseem Abid',
+			$("Web : <a href='http://github.com/jaseemabid'> http://github.com/jaseemabid</a>"),
+			'Vipin Nair',
+			$("Web : <a href='http://github.com/swvist'> http://github.com/swvist</a>"),
+			'Kartik Singhal',
+			' Phone: +91 974 688 7377',
+			' E-mail: kartik@tathva.org',
+			'Abhishek Gupta',
+			' Phone: +91 963 325 0636',
+			' Email: abhishek@tathva.org',
+			'Jerrin Shajee George',
+			' Phone: +91 9567 428 090',
+			'Probal Mukherjee',
+			' Phone: +91 9020 703 783',
+			' Email: probal@tathva.org'
+		], function (num, line) {
+			terminal.print(line);
+		});
+
 	}},
-	'license.txt': {type:'file', read:function(terminal) {
-		terminal.print($('<p>').html('Client-side logic for Wordpress CLI theme :: <a href="http://thrind.xamai.ca/">R. McFarland, 2006, 2007, 2008</a>'));
-		terminal.print($('<p>').html('jQuery rewrite and overhaul :: <a href="http://www.chromakode.com/">Chromakode, 2010</a>'));
+	'license.txt': {type: 'file', read: function (terminal) {
+		'use strict';
 		terminal.print();
 		$.each([
+			$('<p>').html('Client-side logic for Wordpress CLI theme :: <a href="http://thrind.xamai.ca/">R. McFarland, 2006, 2007, 2008</a>'),
+			$('<p>').html('jQuery rewrite and overhaul :: <a href="http://www.chromakode.com/">Chromakode, 2010</a>'),
 			'This program is free software; you can redistribute it and/or',
 			'modify it under the terms of the GNU General Public License',
 			'as published by the Free Software Foundation; either version 2',
 			'of the License, or (at your option) any later version.',
-			'',
 			'This program is distributed in the hope that it will be useful,',
 			'but WITHOUT ANY WARRANTY; without even the implied warranty of',
 			'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the',
 			'GNU General Public License for more details.',
-			'',
 			'You should have received a copy of the GNU General Public License',
 			'along with this program; if not, write to the Free Software',
 			'Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.'
-		], function(num, line) {
+		], function (num, line) {
 			terminal.print(line);
 		});
 	}}
 };
-//Filesystem['blog'] = Filesystem['blag'] = linkFile('http://blag.xkcd.com');
 
 TerminalShell.pwd = Filesystem;
 
@@ -647,6 +673,20 @@ TerminalShell.commands['help'] = TerminalShell.commands['halp'] = function(termi
 	terminal.print('apt-get    cheat     ');
 }; 
 
+TerminalShell.commands['welcome'] = function(terminal) {
+		terminal.print($('<h3>').text('Contest started'));
+		terminal.print('Do not reload or logout.'); 
+		terminal.print('Use the following commands to use the contest console:'); 
+		terminal.print('To view any question type the command:'); 
+		terminal.print($('<h3>').text('question <ques_no> '));
+		terminal.print('e.g. for question no. 5: "question 5"'); 
+		terminal.print('question number must be between 1 and 45'); 
+		terminal.print('To answer any question type :');
+		terminal.print($('<h3>').text('answer -q <ques_no> -a <ans_option>'));
+		terminal.print('e.g. To answer question number 5 with option B : "answer -q 5 -a B"'); 
+		terminal.print('use next prev and random to switch between questions.');
+}; 
+
 TerminalShell.fallback = function(terminal, cmd) {
 	oneliners = {
 		'make me a sandwich': 'What? Make it yourself.',
@@ -722,28 +762,10 @@ $(document).ready(function() {
 		Terminal.promptActive = true;
 	}
 	$('#screen').bind('cli-load', function(e) {
-		Terminal.runCommand('cat welcome.txt');
 		/* Read a page's GET URL variables and return them as an associative array. */
 		/* Example implementation : var cid = getUrlVars()['id']; */
-
 		if(getUrlVars()['auth']) {
-			
-		terminal.print('Contest started...'); 
-		terminal.print('Do not reload or logout.'); 
-		terminal.print('Use the following command to use the contest console:'); 
-		terminal.print('To view any question type the command:'); 
-		terminal.print('question <ques_no> '); 
-		terminal.print('e.g. for question no. 5 type command '); 
-		terminal.print('question 5'); 
-		terminal.print('question number must be between 1 and 45'); 
-		terminal.print('To answer any question type :'); 
-		terminal.print('answer -q <ques_no> -a <ans_option>'); 
-		terminal.print('e.g. To answer question number 5 with option B type '); 
-		terminal.print('answer -q 5 -a B'); 
-		terminal.print('use next prev to switch between questions'); 
-		terminal.print('and random to go to random question ;-)');
-
-
+			Terminal.runCommand('welcome');
 			var dur = 1800, kill = setInterval(function(){
 				$("#timer").text(Math.floor((dur/60)) + " minutes " + Math.floor((dur%60)) +" seconds left");
 				dur -= 1;
@@ -752,6 +774,8 @@ $(document).ready(function() {
 					window.location = xkcd.baseE;
 				}
 			},1000);
+		} else {
+		Terminal.runCommand('cat welcome.txt');
 		}
 	});
 
