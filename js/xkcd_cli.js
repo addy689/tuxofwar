@@ -670,18 +670,22 @@ TerminalShell.commands['help'] = TerminalShell.commands['halp'] = function(termi
 }; 
 
 TerminalShell.commands['welcome'] = function(terminal) {
-		terminal.print($('<h3>').text('Contest started'));
-		terminal.print('Do not reload or logout.'); 
-		terminal.print('Use the following commands to use the contest console:'); 
-		terminal.print('To view any question type the command:'); 
-		terminal.print($('<h3>').text('question <ques_no> '));
-		terminal.print('e.g. for question no. 5: "question 5"'); 
-		terminal.print('question number must be between 1 and 45'); 
-		terminal.print('To answer any question type :');
-		terminal.print($('<h3>').text('answer -q <ques_no> -a <ans_option>'));
-		terminal.print('e.g. To answer question number 5 with option B : "answer -q 5 -a B"'); 
-		terminal.print('use next prev and random to switch between questions.');
-}; 
+	terminal.print($('<h3>').text('Contest started'));
+	terminal.print('Do not reload or logout.'); 
+	terminal.print('Use the following commands to use the contest console:'); 
+	terminal.print('To view any question type the command:'); 
+	terminal.print($('<h3>').text('question <ques_no> '));
+	terminal.print('e.g. for question no. 5: "question 5"'); 
+	terminal.print('question number must be between 1 and 45'); 
+	terminal.print('To answer any question type :');
+	terminal.print($('<h3>').text('answer -q <ques_no> -a <ans_option>'));
+	terminal.print('e.g. To answer question number 5 with option B : "answer -q 5 -a B"'); 
+	terminal.print('use next prev and random to switch between questions.');
+};
+
+TerminalShell.commands['stop'] = function(terminal) {
+	window.location = xkcd.baseE;
+}
 
 TerminalShell.fallback = function(terminal, cmd) {
 	oneliners = {
