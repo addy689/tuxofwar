@@ -21,8 +21,12 @@ class contestStart(webapp.RequestHandler):
 		if not user:
 			self.redirect(users.create_login_url(self.request.uri))
 		else:
-			userdb.userPlayStart(var)
-			self.redirect('/?auth=1')
+			if not userdb.userPlayExist():
+				userdb.userPlayStart(var)
+				self.redirect('/?auth=1')
+			else:
+				self.response.headers['Content-Type'] = 'text/html'
+				self.response.out.write("You were not supposed to do this! <a href='/'>Retry Here</a>")
 
 
 class contestStop(webapp.RequestHandler):
@@ -32,13 +36,14 @@ class contestStop(webapp.RequestHandler):
 
 class contestQuestion(webapp.RequestHandler):
 	def get(self,var):
+		self.response.headers['Content-Type'] = 'application/json'
 		r = questiondb.getQuestion(int(userdb.userPermutation(int(var))))
 		self.response.out.write(r)
 
 class contestAnswer(webapp.RequestHandler):
 	def get(self):
 		self.response.out.write(userdb.userAnswerSubmit(
-								int(userdb.userReversePermutation(int(self.request.get('question')))),
+								int(userdb.userPermutation(int(self.request.get('question')))),
 								self.request.get('answer')))
 
 class adminQuestionsAdd(webapp.RequestHandler):
