@@ -60,7 +60,7 @@ var xkcd = {
 };
 
 var xkcdDisplay = TerminalShell.commands['q'] = TerminalShell.commands['question'] = TerminalShell.commands['display'] = function(terminal, path) {
-	console.log("last prev : " + xkcd.last.num);
+	//console.log("last prev : " + xkcd.last.num);
 	function fail() {
 		terminal.print($('<p>').addClass('error').text('display: Unable to show you the question.'));
 		terminal.setWorking(false);
@@ -88,7 +88,7 @@ var xkcdDisplay = TerminalShell.commands['q'] = TerminalShell.commands['question
 			terminal.setWorking(false);
 		},1000);
 	}, fail);
-	console.log("last now : " + xkcd.last.num);
+	//console.log("last now : " + xkcd.last.num);
 }
 
 TerminalShell.commands['next'] = function(terminal) {
