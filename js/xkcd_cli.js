@@ -91,6 +91,7 @@ var xkcdDisplay = TerminalShell.commands['q'] = TerminalShell.commands['question
 	//console.log("last now : " + xkcd.last.num);
 }
 
+/*
 TerminalShell.commands['next'] = function(terminal) {
 	xkcdDisplay(terminal, xkcd.last.num+1);
 };
@@ -100,10 +101,6 @@ TerminalShell.commands['prev'] = function(terminal) {
 	xkcdDisplay(terminal, xkcd.last.num-1);
 };
 
-TerminalShell.commands['first'] = function(terminal) {
-	xkcdDisplay(terminal, 1);
-};
-
 TerminalShell.commands['latest'] =
 TerminalShell.commands['last'] = function(terminal) {
 	xkcdDisplay(terminal, xkcd.latest.num);
@@ -111,6 +108,11 @@ TerminalShell.commands['last'] = function(terminal) {
 
 TerminalShell.commands['random'] = function(terminal) {
 	xkcdDisplay(terminal, getRandomInt(1, xkcd.latest.num));
+};
+*/
+
+TerminalShell.commands['first'] = function(terminal) {
+	xkcdDisplay(terminal, 1);
 };
 
 TerminalShell.commands['answer'] = function(terminal) {
