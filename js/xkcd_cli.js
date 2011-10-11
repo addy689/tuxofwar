@@ -76,7 +76,7 @@ var xkcdDisplay = TerminalShell.commands['q'] = TerminalShell.commands['question
 	xkcd.get(path, function(data) {
 		// Stuff to be dome with question data
 		terminal.setWorking(true);
-		terminal.print($('<h3>').text('Question ' + data.num));
+		terminal.print($('<h3>').text('Question '));
 		terminal.print($('<p class=question>' + data.question + '</p>'));
 		if(data.image)
 			terminal.print($('<img>').addClass('comic').attr('src', data.image));
