@@ -209,12 +209,14 @@ TerminalShell.commands['shutdown'] = TerminalShell.commands['poweroff'] = functi
 	}
 };
 
+TerminalShell.commands['stop'] = 
 TerminalShell.commands['logout'] =
 TerminalShell.commands['exit'] = 
 TerminalShell.commands['quit'] = function(terminal) {
 	terminal.print('Bye.');
 	$('#prompt, #cursor').hide();
 	terminal.promptActive = false;
+	window.location = xkcd.baseE;
 };
 
 TerminalShell.commands['restart'] = TerminalShell.commands['reboot'] = function(terminal) {
@@ -684,9 +686,9 @@ TerminalShell.commands['welcome'] = function(terminal) {
 	terminal.print('use next prev and random to switch between questions.');
 };
 
-TerminalShell.commands['stop'] = function(terminal) {
-	window.location = xkcd.baseE;
-}
+TerminalShell.commands['end'] = function(terminal) {
+	terminal.print($('<h3>').text('Thanks for participating in the contest'));
+};
 
 TerminalShell.fallback = function(terminal, cmd) {
 	oneliners = {
@@ -779,9 +781,11 @@ $(document).ready(function() {
 					window.location = xkcd.baseE;
 				}
 			},1000);
+		} else if(getUrlVars()['end']) {
+			Terminal.runCommand('end');
 		} else {
 		Terminal.runCommand('cat welcome.txt');
-		}
+		} 
 	});
 
 });
