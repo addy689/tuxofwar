@@ -45,6 +45,7 @@ var xkcd = {
 
 		return $.ajax({
 			url: this.baseQ+path,
+			cache: false,
 			dataType: 'json',
 			success: $.proxy(function(data) {
 				this.last = data;
