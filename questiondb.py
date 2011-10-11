@@ -17,12 +17,12 @@ def getQuestion(num):
 	if q:
 		return ("{"+
 				"\"num\" : " + "\""+str(q.questionNumber)+"\""+","+
-				"\"question\" : "+"\""+q.question.replace('\n','<br />')+"\""+","+
+				"\"question\" : "+"\""+q.question.replace('\r\n','<br />')+"\""+","+
 				"\"image\" : "+"\""+q.qimage+"\""+","+ 
 				"\"options\" : " + "["+
-									"\""+q.opt1.replace('\n','<br />')+"\""+","+
-									"\""+q.opt2.replace('\n','<br />')+"\""+","+
-									"\""+q.opt3.replace('\n','<br />')+"\""+","+
-									"\""+q.opt4.replace('\n','<br />')+"\""+
+									"\""+q.opt1.replace('\r\n','<br />')+"\""+","+
+									"\""+q.opt2.replace('\r\n','<br />')+"\""+","+
+									"\""+q.opt3.replace('\r\n','<br />')+"\""+","+
+									"\""+q.opt4.replace('\r\n','<br />')+"\""+
 									"]"+
 				"}")
