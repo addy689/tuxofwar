@@ -4,7 +4,8 @@ A MCQ app that run over GAE made with terminal goodness UI.
 
 Credits
 -------
-Jaseem Abid <jaseemabdi@gmail.com>
+Jaseem Abid <jaseemabid@gmail.com>
+
 Vipin Nair <swvist@gmail.com>
 
 UI adapted from UNIXKCD by chromakode.
